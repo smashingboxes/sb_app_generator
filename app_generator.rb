@@ -42,7 +42,7 @@ class AppBuilder < Rails::AppBuilder
 
   def database_yml
     get_from_master_repo 'config/database.yml'
-    copy_file 'config/database.yml', 'config/example_database.yml'
+    run 'cp config/database.yml config/example_database.yml'
   end
   
   def leftovers
