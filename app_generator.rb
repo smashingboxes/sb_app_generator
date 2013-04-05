@@ -101,5 +101,8 @@ class AppBuilder < Rails::AppBuilder
     end
 
     git add: ".", commit: "-m 'initial commit'"
+
+    puts ""
+    puts "You're welcome, from Michael and Leonel"
   end
 end
