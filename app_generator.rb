@@ -94,6 +94,20 @@ class AppBuilder < Rails::AppBuilder
 #   #   template 'test/test_helper.rb'
 #   # end
 
+  def test
+    empty_directory_with_keep_file 'test/factories'
+    empty_directory_with_keep_file 'test/controllers'
+    empty_directory_with_keep_file 'test/mailers'
+    empty_directory_with_keep_file 'test/models'
+    empty_directory_with_keep_file 'test/helpers'
+    empty_directory_with_keep_file 'test/integration'
+
+    empty_directory 'test/support'
+    get_from_master_repo 'test/support/bootstrap_macros.rb'
+
+    get_from_master_repo 'test/test_helper.rb'
+  end
+
   def gemfile
     get_from_master_repo "Gemfile"
   end  
