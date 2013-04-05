@@ -46,10 +46,11 @@ class AppBuilder < Rails::AppBuilder
   end
   
   def leftovers
-    app_name = ask("What is your application name? ").underscore
     server_ip = ask("What is the IP of your production server (leave empty if you don't know it yet)? ")
-    db_username = ask("Database Username: ").underscore
-    db_password = ask("Database Password: ").underscore
+    whoami = run('whoami', capture: true).strip
+    db_username = ask("Database Username [#{whoami}]: ").underscore
+    db_username = db_username.empty? ? whoami : db_username
+    db_password = ask("Database Password []: ").underscore
 
     get_from_master_repo "Procfile"
 
