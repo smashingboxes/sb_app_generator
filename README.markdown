@@ -12,4 +12,6 @@ rails new your_app_name -b https://raw.github.com/smashingboxes/sb_app_generator
 ```
 
 ## Troubleshoot
-Make sure you have the latest ruby 1.9.3 if you get an ssl error
+
+### SSL error
+Make sure you have the latest ruby >= 1.9.3p362
