@@ -2,23 +2,23 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: {{app_name}}_development
+  database: {{db_name}}_development
   pool: 5
-  username: postgres
-  password: password
+  username: {{db_username}}
+  password: {{db_password}}
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: {{app_name}}_test
+  database: {{db_name}}_test
   pool: 5
-  username: postgres
-  password: password
+  username: {{db_username}}
+  password: {{db_password}}
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: {{app_name}}_development
+  database: {{db_name}}_development
   pool: 5
-  username: postgres
-  password: password
+  username: {{db_username}}
+  password: {{db_password}}

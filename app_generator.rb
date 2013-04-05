@@ -191,16 +191,24 @@ class AppBuilder < Rails::AppBuilder
 
     gsub_file "config/application.rb", /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
 
+    bundle_command('install')
+
+    db_name = ask("What is your database name").underscore
+    db_username = ask("Database Username").underscore
+    db_password = ask("Database Password").underscore
+    gsub_file "config/database.yml", /\{\{db_name\}\}/, db_name
+    gsub_file "config/database.yml", /\{\{db_user\}\}/, db_username
+    gsub_file "config/database.yml", /\{\{db_password\}\}/, db_password
+    rake("db:create:all")
+
+    generate 'simple_form:install --bootstrap'
+
     if yes? "Do you want to generate a root controller?"
       name = ask("What should it be called?").underscore
       generate :controller, "#{name} index"
       route "root to: '#{name}\#index'"
       remove_file "public/index.html"
     end
-
-    bundle_command('install')
-    generate 'simple_form:install --bootstrap'
-
 
     git add: ".", commit: "-m 'initial commit'"
   end
