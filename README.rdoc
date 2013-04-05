@@ -1,0 +1,4 @@
+= Smashing Boxes App generator
+
+== Usage
+`rails new blog -b app_builder.rb`
