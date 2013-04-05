@@ -7,8 +7,18 @@
 ### First time deployment
 
 1) create deployer user
+```
 ssh root@your-server-ip
 adduser deployer --ingroup sudo
+su deployer
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+```
+
+Then copy paste that file to:
+```
+https://github.com/smashingboxes/yourapp/settings/keys
+```
 
 2) Edit the config/deploy.rb with the correct settings
 
@@ -32,3 +42,13 @@ see `cap -T`
 Example:
 cap unicorn:stop
 cap unicorn:start 
+
+
+### Troubleshoot
+
+#### Assets precompilation error
+Make sure the assets are precompiled
+```
+cap deploy:assets:precompile
+cap unicorn:restart
+```
