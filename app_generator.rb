@@ -47,6 +47,9 @@ class AppBuilder < Rails::AppBuilder
   
   def leftovers
     app_name = ask("What is your application name? ").underscore
+    server_ip = ask("What is the IP of your production server (leave empty if you don't know it yet)? ")
+    db_username = ask("Database Username: ").underscore
+    db_password = ask("Database Password: ").underscore
 
     get_from_master_repo "Procfile"
 
@@ -75,17 +78,12 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo "config/recipes/templates/unicorn_init.erb"
     get_from_master_repo "config/deploy.rb"
 
-    server_ip = ask("What is the IP of your production server (leave empty if you don't know it yet)? ")
-
     gsub_file "config/deploy.rb", /\{\{app_name\}\}/, app_name if app_name.present?
     gsub_file "config/deploy.rb", /\{\{server_ip\}\}/, server_ip if server_ip.present?
 
     bundle_command('install') #needs to be before generators and scaffolding
 
     # Create database
-    
-    db_username = ask("Database Username: ").underscore
-    db_password = ask("Database Password: ").underscore
     gsub_file "config/database.yml", /\{\{db_name\}\}/, app_name if app_name.present?
     gsub_file "config/database.yml", /\{\{db_username\}\}/, db_username if db_username.present?
     gsub_file "config/database.yml", /\{\{db_password\}\}/, "#{db_password}"
