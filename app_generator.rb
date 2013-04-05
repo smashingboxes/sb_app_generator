@@ -59,6 +59,8 @@ class AppBuilder < Rails::AppBuilder
     gsub_file 'config/application.rb', /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
 
     # Capistrano
+
+    run "capify ."
     empty_directory_with_gitkeep 'config/recipes/templates'
     get_from_master_repo 'config/recipes/base.rb'
     get_from_master_repo 'config/recipes/check.rb'

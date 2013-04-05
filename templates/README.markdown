@@ -14,8 +14,8 @@ adduser deployer --ingroup sudo
 
 3) Run:
 ```
-cap install
-cap setup
+cap deploy:install
+cap deploy:setup
 cap deploy:cold
 cap deploy
 ```
