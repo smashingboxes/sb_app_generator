@@ -94,12 +94,12 @@ class AppBuilder < Rails::AppBuilder
 #   # end
 
   def test
-    empty_directory_with_keep_file 'test/factories'
-    empty_directory_with_keep_file 'test/controllers'
-    empty_directory_with_keep_file 'test/mailers'
-    empty_directory_with_keep_file 'test/models'
-    empty_directory_with_keep_file 'test/helpers'
-    empty_directory_with_keep_file 'test/integration'
+    empty_directory_with_gitkeep 'test/factories'
+    empty_directory_with_gitkeep 'test/controllers'
+    empty_directory_with_gitkeep 'test/mailers'
+    empty_directory_with_gitkeep 'test/models'
+    empty_directory_with_gitkeep 'test/helpers'
+    empty_directory_with_gitkeep 'test/integration'
 
     empty_directory 'test/support'
     get_from_master_repo 'test/support/bootstrap_macros.rb'
