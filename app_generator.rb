@@ -3,11 +3,11 @@ class AppBuilder < Rails::AppBuilder
     super(generator)
 
     @generate_after_bundler = []
-    @master_url = "http://github.com/103208"
+    @master_url = "https://raw.github.com/smashingboxes/sb_app_generator/master"
   end
 
   def get_from_master_repo(file_path)
-    get "#{@master_url}/#{file_path}", file_path
+    get "#{@master_url}/templates/#{file_path}", file_path
   end
 
   # def rakefile
@@ -15,197 +15,197 @@ class AppBuilder < Rails::AppBuilder
   # end
 
   def readme
-    get_from_master_repo "doc/README"
+    get_from_master_repo "README.markdown"
   end
   # def readme
   #   copy_file "README.rdoc", "README.rdoc"
   # end
 
-  def test
-    empty_directory "features"
-    empty_directory "steps"
+#   def test
+# #     empty_directory "features"
+# #     empty_directory "steps"
 
-    create_file "test/minitest_helper.rb", <<-RUBY
-ENV["RAILS_ENV"] = "test"
-require File.expand_path('../../config/environment', __FILE__)
+# #     create_file "test/minitest_helper.rb", <<-RUBY
+# # ENV["RAILS_ENV"] = "test"
+# # require File.expand_path('../../config/environment', __FILE__)
 
-require "minitest/autorun"
-require "minitest/rails"
-require "minitest/rails/capybara"
+# # require "minitest/autorun"
+# # require "minitest/rails"
+# # require "minitest/rails/capybara"
 
-begin; require 'turn/autorun'; rescue LoadError; end
+# # begin; require 'turn/autorun'; rescue LoadError; end
 
-class ActiveSupport::TestCase
-  include FactoryGirl::Syntax::Methods
-end
+# # class ActiveSupport::TestCase
+# #   include FactoryGirl::Syntax::Methods
+# # end
 
-class ActionDispatch::IntegrationTest
-  include Rails.application.routes.url_helpers
-  include Capybara::RSpecMatchers
-  include Capybara::DSL
-end
-RUBY
+# # class ActionDispatch::IntegrationTest
+# #   include Rails.application.routes.url_helpers
+# #   include Capybara::RSpecMatchers
+# #   include Capybara::DSL
+# # end
+# # RUBY
 
-    create_file "features/support/env.rb", <<-RUBY
-ENV['RAILS_ENV'] = 'test'
-require './config/environment'
-require 'minitest/spec'
-require 'database_cleaner'
+# #     create_file "features/support/env.rb", <<-RUBY
+# # ENV['RAILS_ENV'] = 'test'
+# # require './config/environment'
+# # require 'minitest/spec'
+# # require 'database_cleaner'
 
-DatabaseCleaner.strategy = :truncation
+# # DatabaseCleaner.strategy = :truncation
 
-Spinach.hooks.before_scenario{ DatabaseCleaner.clean }
+# # Spinach.hooks.before_scenario{ DatabaseCleaner.clean }
 
-# Spinach.config.save_and_open_page_on_failure = true
-RUBY
+# # # Spinach.config.save_and_open_page_on_failure = true
+# # RUBY
 
-  create_file "Guardfile", <<-TEXT
-guard 'minitest' do
-  # with Minitest::Unit
-  watch(%r|^test/(.*)\\/?test_(.*)\\.rb|)
-  watch(%r|^lib/(.*)([^/]+)\\.rb|)     { |m| "test/\#{m[1]}test_\#{m[2]}.rb" }
-  watch(%r|^test/test_helper\\.rb|)    { "test" }
+# #   create_file "Guardfile", <<-TEXT
+# # guard 'minitest' do
+# #   # with Minitest::Unit
+# #   watch(%r|^test/(.*)\\/?test_(.*)\\.rb|)
+# #   watch(%r|^lib/(.*)([^/]+)\\.rb|)     { |m| "test/\#{m[1]}test_\#{m[2]}.rb" }
+# #   watch(%r|^test/test_helper\\.rb|)    { "test" }
  
-  # with Minitest::Spec
-  # watch(%r|^spec/(.*)_spec\\.rb|)
-  # watch(%r|^lib/(.*)([^/]+)\\.rb|)     { |m| "spec/\#{m[1]}\#{m[2]}_spec.rb" }
-  # watch(%r|^spec/spec_helper\\.rb|)    { "spec" }
+# #   # with Minitest::Spec
+# #   # watch(%r|^spec/(.*)_spec\\.rb|)
+# #   # watch(%r|^lib/(.*)([^/]+)\\.rb|)     { |m| "spec/\#{m[1]}\#{m[2]}_spec.rb" }
+# #   # watch(%r|^spec/spec_helper\\.rb|)    { "spec" }
  
-  watch(%r|^app/controllers/(.*)\\.rb|) { |m| "test/controllers/\#{m[1]}_test.rb" }
-  watch(%r|^app/helpers/(.*)\\.rb|)     { |m| "test/helpers/\#{m[1]}_test.rb" }
-  watch(%r|^app/models/(.*)\\.rb|)      { |m| "test/unit/\#{m[1]}_test.rb" }  
-end
-guard 'spinach' do
-  watch(%r|^features/(.*)\\.feature|)
-  watch(%r|^features/steps/(.*)([^/]+)\\.rb|) do |m|
-    "features/\#{m[1]}\#{m[2]}.feature"
-  end
-end
-TEXT
-  end
+# #   watch(%r|^app/controllers/(.*)\\.rb|) { |m| "test/controllers/\#{m[1]}_test.rb" }
+# #   watch(%r|^app/helpers/(.*)\\.rb|)     { |m| "test/helpers/\#{m[1]}_test.rb" }
+# #   watch(%r|^app/models/(.*)\\.rb|)      { |m| "test/unit/\#{m[1]}_test.rb" }  
+# # end
+# # guard 'spinach' do
+# #   watch(%r|^features/(.*)\\.feature|)
+# #   watch(%r|^features/steps/(.*)([^/]+)\\.rb|) do |m|
+# #     "features/\#{m[1]}\#{m[2]}.feature"
+# #   end
+# # end
+# # TEXT
+#   end
 
 
-  def gemfile
-    get_from_master_repo "Gemfile"
-  end  
-  # def gemfile
-  #   template "Gemfile"
-  # end
+#   def gemfile
+#     get_from_master_repo "Gemfile"
+#   end  
+#   # def gemfile
+#   #   template "Gemfile"
+#   # end
 
-  # def configru
-  #   template "config.ru"
-  # end
+#   # def configru
+#   #   template "config.ru"
+#   # end
 
-  def gitignore
-    git :init
-    get_from_master_repo ".gitignore"
-  end
-  # def gitignore
-  #   copy_file "gitignore", ".gitignore"
-  # end
+#   def gitignore
+#     git :init
+#     get_from_master_repo ".gitignore"
+#   end
+#   # def gitignore
+#   #   copy_file "gitignore", ".gitignore"
+#   # end
 
-  # def app
-  #   directory 'app'
+#   # def app
+#   #   directory 'app'
 
-  #   keep_file  'app/mailers'
-  #   keep_file  'app/models'
+#   #   keep_file  'app/mailers'
+#   #   keep_file  'app/models'
 
-  #   keep_file  'app/controllers/concerns'
-  #   keep_file  'app/models/concerns'
-  # end
+#   #   keep_file  'app/controllers/concerns'
+#   #   keep_file  'app/models/concerns'
+#   # end
 
-  # def bin
-  #   directory "bin" do |content|
-  #     "#{shebang}\n" + content
-  #   end
-  #   chmod "bin", 0755, verbose: false
-  # end
+#   # def bin
+#   #   directory "bin" do |content|
+#   #     "#{shebang}\n" + content
+#   #   end
+#   #   chmod "bin", 0755, verbose: false
+#   # end
 
-  # def config
-  #   empty_directory "config"
+#   # def config
+#   #   empty_directory "config"
 
-  #   inside "config" do
-  #     template "routes.rb"
-  #     template "application.rb"
-  #     template "environment.rb"
+#   #   inside "config" do
+#   #     template "routes.rb"
+#   #     template "application.rb"
+#   #     template "environment.rb"
 
-  #     directory "environments"
-  #     directory "initializers"
-  #     directory "locales"
-  #   end
-  # end
+#   #     directory "environments"
+#   #     directory "initializers"
+#   #     directory "locales"
+#   #   end
+#   # end
 
-  def database_yml
-    get_from_master_repo "config/database.yml"
-    run "cp config/database.yml config/example_database.yml"
-  end
-  # def database_yml
-  #   template "config/databases/#{options[:database]}.yml", "config/database.yml"
-  # end
+#   def database_yml
+#     get_from_master_repo "config/database.yml"
+#     run "cp config/database.yml config/example_database.yml"
+#   end
+#   # def database_yml
+#   #   template "config/databases/#{options[:database]}.yml", "config/database.yml"
+#   # end
 
-  # def db
-  #   directory "db"
-  # end
+#   # def db
+#   #   directory "db"
+#   # end
 
-  # def lib
-  #   empty_directory 'lib'
-  #   empty_directory_with_keep_file 'lib/tasks'
-  #   empty_directory_with_keep_file 'lib/assets'
-  # end
+#   # def lib
+#   #   empty_directory 'lib'
+#   #   empty_directory_with_keep_file 'lib/tasks'
+#   #   empty_directory_with_keep_file 'lib/assets'
+#   # end
 
-  # def log
-  #   empty_directory_with_keep_file 'log'
-  # end
+#   # def log
+#   #   empty_directory_with_keep_file 'log'
+#   # end
 
-  # def public_directory
-  #   directory "public", "public", recursive: false
-  # end
+#   # def public_directory
+#   #   directory "public", "public", recursive: false
+#   # end
 
-  # def test
-  #   empty_directory_with_keep_file 'test/fixtures'
-  #   empty_directory_with_keep_file 'test/controllers'
-  #   empty_directory_with_keep_file 'test/mailers'
-  #   empty_directory_with_keep_file 'test/models'
-  #   empty_directory_with_keep_file 'test/helpers'
-  #   empty_directory_with_keep_file 'test/integration'
+#   # def test
+#   #   empty_directory_with_keep_file 'test/fixtures'
+#   #   empty_directory_with_keep_file 'test/controllers'
+#   #   empty_directory_with_keep_file 'test/mailers'
+#   #   empty_directory_with_keep_file 'test/models'
+#   #   empty_directory_with_keep_file 'test/helpers'
+#   #   empty_directory_with_keep_file 'test/integration'
 
-  #   template 'test/test_helper.rb'
-  # end
+#   #   template 'test/test_helper.rb'
+#   # end
 
-  # def tmp
-  #   empty_directory "tmp/cache"
-  #   empty_directory "tmp/cache/assets"
-  # end
+#   # def tmp
+#   #   empty_directory "tmp/cache"
+#   #   empty_directory "tmp/cache/assets"
+#   # end
 
-  # def vendor
-  #   vendor_javascripts
-  #   vendor_stylesheets
-  # end
+#   # def vendor
+#   #   vendor_javascripts
+#   #   vendor_stylesheets
+#   # end
 
-  # def vendor_javascripts
-  #   empty_directory_with_keep_file 'vendor/assets/javascripts'
-  # end
+#   # def vendor_javascripts
+#   #   empty_directory_with_keep_file 'vendor/assets/javascripts'
+#   # end
 
-  # def vendor_stylesheets
-  #   empty_directory_with_keep_file 'vendor/assets/stylesheets'
-  # end
+#   # def vendor_stylesheets
+#   #   empty_directory_with_keep_file 'vendor/assets/stylesheets'
+#   # end
 
   
-  def leftovers
-    get_from_master_repo "Procfile"
-    get_from_master_repo "config/initializers/active_record_rails4.rb"
+#   def leftovers
+#     get_from_master_repo "Procfile"
+#     get_from_master_repo "config/initializers/active_record_rails4.rb"
 
-    if yes? "Do you want to generate a root controller?"
-      name = ask("What should it be called?").underscore
-      generate :controller, "#{name} index"
-      route "root to: '#{name}\#index'"
-      remove_file "public/index.html"
-    end
+#     if yes? "Do you want to generate a root controller?"
+#       name = ask("What should it be called?").underscore
+#       generate :controller, "#{name} index"
+#       route "root to: '#{name}\#index'"
+#       remove_file "public/index.html"
+#     end
 
-    bundle_command('install')
-    generate 'simple_form:install --bootstrap'
+#     bundle_command('install')
+#     generate 'simple_form:install --bootstrap'
 
 
-    git add: ".", commit: "-m 'initial commit'"
-  end
+#     git add: ".", commit: "-m 'initial commit'"
+#   end
 end
