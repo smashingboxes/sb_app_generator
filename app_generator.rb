@@ -46,8 +46,8 @@ class AppBuilder < Rails::AppBuilder
   end
   
   def leftovers
-    server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
     whoami = run('whoami', capture: true).strip
+    server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
     db_username = ask("Database Username [#{whoami}]: ").underscore
     db_username = db_username.empty? ? whoami : db_username
     db_password = ask('Database Password []: ').underscore
@@ -102,7 +102,7 @@ class AppBuilder < Rails::AppBuilder
 
     git add: '.', commit: "-m 'initial commit'"
 
-    puts ''
-    puts "You're welcome, from Michael and Leonel"
+    run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!"
+    say "You're welcome, from Michael and Leonel"
   end
 end
