@@ -102,7 +102,7 @@ class AppBuilder < Rails::AppBuilder
 
     git add: '.', commit: "-m 'initial commit'"
 
-    run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!"
+    run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!'"
     say "You're welcome, from Michael and Leonel"
   end
 end
