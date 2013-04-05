@@ -197,7 +197,7 @@ class AppBuilder < Rails::AppBuilder
     db_username = ask("Database Username").underscore
     db_password = ask("Database Password").underscore
     gsub_file "config/database.yml", /\{\{db_name\}\}/, db_name
-    gsub_file "config/database.yml", /\{\{db_user\}\}/, db_username
+    gsub_file "config/database.yml", /\{\{db_username\}\}/, db_username
     gsub_file "config/database.yml", /\{\{db_password\}\}/, db_password
     rake("db:create:all")
 
