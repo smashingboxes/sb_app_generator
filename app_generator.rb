@@ -8,6 +8,7 @@ class AppBuilder < Rails::AppBuilder
 
   def get_from_master_repo(file_path)
     get "#{@master_url}/templates/#{file_path}", file_path
+    gsub_file file_path, /\{\{app_name\}\}/, "my_app"
   end
 
   # def rakefile
@@ -16,12 +17,11 @@ class AppBuilder < Rails::AppBuilder
 
   def readme
     get_from_master_repo "README.markdown"
+     #   copy_file "README.rdoc", "README.rdoc"
   end
-  # def readme
-  #   copy_file "README.rdoc", "README.rdoc"
-  # end
 
-#   def test
+
+  # def test
 # #     empty_directory "features"
 # #     empty_directory "steps"
 
@@ -82,85 +82,7 @@ class AppBuilder < Rails::AppBuilder
 # #   end
 # # end
 # # TEXT
-#   end
-
-
-#   def gemfile
-#     get_from_master_repo "Gemfile"
-#   end  
-#   # def gemfile
-#   #   template "Gemfile"
-#   # end
-
-#   # def configru
-#   #   template "config.ru"
-#   # end
-
-#   def gitignore
-#     git :init
-#     get_from_master_repo ".gitignore"
-#   end
-#   # def gitignore
-#   #   copy_file "gitignore", ".gitignore"
-#   # end
-
-#   # def app
-#   #   directory 'app'
-
-#   #   keep_file  'app/mailers'
-#   #   keep_file  'app/models'
-
-#   #   keep_file  'app/controllers/concerns'
-#   #   keep_file  'app/models/concerns'
-#   # end
-
-#   # def bin
-#   #   directory "bin" do |content|
-#   #     "#{shebang}\n" + content
-#   #   end
-#   #   chmod "bin", 0755, verbose: false
-#   # end
-
-#   # def config
-#   #   empty_directory "config"
-
-#   #   inside "config" do
-#   #     template "routes.rb"
-#   #     template "application.rb"
-#   #     template "environment.rb"
-
-#   #     directory "environments"
-#   #     directory "initializers"
-#   #     directory "locales"
-#   #   end
-#   # end
-
-#   def database_yml
-#     get_from_master_repo "config/database.yml"
-#     run "cp config/database.yml config/example_database.yml"
-#   end
-#   # def database_yml
-#   #   template "config/databases/#{options[:database]}.yml", "config/database.yml"
-#   # end
-
-#   # def db
-#   #   directory "db"
-#   # end
-
-#   # def lib
-#   #   empty_directory 'lib'
-#   #   empty_directory_with_keep_file 'lib/tasks'
-#   #   empty_directory_with_keep_file 'lib/assets'
-#   # end
-
-#   # def log
-#   #   empty_directory_with_keep_file 'log'
-#   # end
-
-#   # def public_directory
-#   #   directory "public", "public", recursive: false
-#   # end
-
+  # end
 #   # def test
 #   #   empty_directory_with_keep_file 'test/fixtures'
 #   #   empty_directory_with_keep_file 'test/controllers'
@@ -172,40 +94,114 @@ class AppBuilder < Rails::AppBuilder
 #   #   template 'test/test_helper.rb'
 #   # end
 
-#   # def tmp
-#   #   empty_directory "tmp/cache"
-#   #   empty_directory "tmp/cache/assets"
+  def gemfile
+    get_from_master_repo "Gemfile"
+  end  
+
+
+#   # def configru
+#   #   template "config.ru"
 #   # end
 
-#   # def vendor
-#   #   vendor_javascripts
-#   #   vendor_stylesheets
-#   # end
+  def gitignore
+    git :init
+    get_from_master_repo ".gitignore"
+    #   copy_file "gitignore", ".gitignore"
+  end
 
-#   # def vendor_javascripts
-#   #   empty_directory_with_keep_file 'vendor/assets/javascripts'
-#   # end
 
-#   # def vendor_stylesheets
-#   #   empty_directory_with_keep_file 'vendor/assets/stylesheets'
-#   # end
+  # def app
+  #   directory 'app'
+
+  #   keep_file  'app/mailers'
+  #   keep_file  'app/models'
+
+  #   keep_file  'app/controllers/concerns'
+  #   keep_file  'app/models/concerns'
+  # end
+
+  # def bin
+  #   directory "bin" do |content|
+  #     "#{shebang}\n" + content
+  #   end
+  #   chmod "bin", 0755, verbose: false
+  # end
+
+  # def config
+  #   empty_directory "config"
+
+  #   inside "config" do
+  #     template "routes.rb"
+  #     template "application.rb"
+  #     template "environment.rb"
+
+  #     directory "environments"
+  #     directory "initializers"
+  #     directory "locales"
+  #   end
+  # end
+
+  def database_yml
+    get_from_master_repo "config/database.yml"
+    run "cp config/database.yml config/example_database.yml"
+    #   template "config/databases/#{options[:database]}.yml", "config/database.yml"
+  end
+
+
+  # def db
+  #   directory "db"
+  # end
+
+  # def lib
+  #   empty_directory 'lib'
+  #   empty_directory_with_keep_file 'lib/tasks'
+  #   empty_directory_with_keep_file 'lib/assets'
+  # end
+
+  # def log
+  #   empty_directory_with_keep_file 'log'
+  # end
+
+  # def public_directory
+  #   directory "public", "public", recursive: false
+  # end
+
+  # def tmp
+  #   empty_directory "tmp/cache"
+  #   empty_directory "tmp/cache/assets"
+  # end
+
+  # def vendor
+  #   vendor_javascripts
+  #   vendor_stylesheets
+  # end
+
+  # def vendor_javascripts
+  #   empty_directory_with_keep_file 'vendor/assets/javascripts'
+  # end
+
+  # def vendor_stylesheets
+  #   empty_directory_with_keep_file 'vendor/assets/stylesheets'
+  # end
 
   
-#   def leftovers
-#     get_from_master_repo "Procfile"
-#     get_from_master_repo "config/initializers/active_record_rails4.rb"
+  def leftovers
+    get_from_master_repo "Procfile"
+    get_from_master_repo "config/initializers/strong_parameters.rb"
 
-#     if yes? "Do you want to generate a root controller?"
-#       name = ask("What should it be called?").underscore
-#       generate :controller, "#{name} index"
-#       route "root to: '#{name}\#index'"
-#       remove_file "public/index.html"
-#     end
+    gsub_file "config/application.rb", /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
 
-#     bundle_command('install')
-#     generate 'simple_form:install --bootstrap'
+    if yes? "Do you want to generate a root controller?"
+      name = ask("What should it be called?").underscore
+      generate :controller, "#{name} index"
+      route "root to: '#{name}\#index'"
+      remove_file "public/index.html"
+    end
+
+    bundle_command('install')
+    generate 'simple_form:install --bootstrap'
 
 
-#     git add: ".", commit: "-m 'initial commit'"
-#   end
+    git add: ".", commit: "-m 'initial commit'"
+  end
 end
