@@ -2,13 +2,12 @@ class AppBuilder < Rails::AppBuilder
   def initialize(generator)
     super(generator)
 
-    @generate_after_bundler = []
     @master_url = "https://raw.github.com/smashingboxes/sb_app_generator/master"
   end
 
   def get_from_master_repo(file_path)
     get "#{@master_url}/templates/#{file_path}", file_path
-    gsub_file file_path, /\{\{app_name\}\}/, "my_app"
+    # gsub_file file_path, /\{\{app_name\}\}/, "my_app"
   end
 
   # def rakefile
@@ -200,21 +199,53 @@ class AppBuilder < Rails::AppBuilder
 
   
   def leftovers
-    get_from_master_repo "Procfile"
-    get_from_master_repo "config/initializers/strong_parameters.rb"
+    app_name = ask("What is your application name? ").underscore
 
+    get_from_master_repo "Procfile"
+
+    # Strong parameters
+    get_from_master_repo "config/initializers/strong_parameters.rb"
     gsub_file "config/application.rb", /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
 
-    bundle_command('install')
+    # Capistrano
+    empty_directory "config/recipes/templates"
+    get_from_master_repo "config/recipes/base.rb"
+    get_from_master_repo "config/recipes/check.rb"
+    get_from_master_repo "config/recipes/dragonfly.rb"
+    get_from_master_repo "config/recipes/elasticsearch.rb"
+    get_from_master_repo "config/recipes/foreman.rb"
+    get_from_master_repo "config/recipes/memcached.rb"
+    get_from_master_repo "config/recipes/nginx.rb"
+    get_from_master_repo "config/recipes/nodejs.rb"
+    get_from_master_repo "config/recipes/postgresql.rb"
+    get_from_master_repo "config/recipes/rbenv.rb"
+    get_from_master_repo "config/recipes/unicorn.rb"
+    get_from_master_repo "config/recipes/templates/maintenance.html.erb"
+    get_from_master_repo "config/recipes/templates/memcached.erb"
+    get_from_master_repo "config/recipes/templates/nginx_unicorn.erb"
+    get_from_master_repo "config/recipes/templates/postgresql.yml.erb"
+    get_from_master_repo "config/recipes/templates/unicorn.rb.erb"
+    get_from_master_repo "config/recipes/templates/unicorn_init.erb"
+    get_from_master_repo "config/deploy.rb"
 
-    db_name = ask("What is your database name").underscore
-    db_username = ask("Database Username").underscore
-    db_password = ask("Database Password").underscore
-    gsub_file "config/database.yml", /\{\{db_name\}\}/, db_name
-    gsub_file "config/database.yml", /\{\{db_username\}\}/, db_username
-    gsub_file "config/database.yml", /\{\{db_password\}\}/, db_password
+    server_ip = ask("What is the IP of your production server? ")
+    server_password = ask("What is the root password (not saved)? ")
+
+    gsub_file "config/deploy.rb", /\{\{app_name\}\}/, app_name if app_name.present?
+    gsub_file "config/deploy.rb", /\{\{server_ip\}\}/, server_ip if server_ip.present?
+
+    bundle_command('install') #needs to be before generators and scaffolding
+
+    # Create database
+    
+    db_username = ask("Database Username: ").underscore
+    db_password = ask("Database Password: ").underscore
+    gsub_file "config/database.yml", /\{\{db_name\}\}/, app_name if app_name.present?
+    gsub_file "config/database.yml", /\{\{db_username\}\}/, db_username if db_username.present?
+    gsub_file "config/database.yml", /\{\{db_password\}\}/, "#{db_password}"
     rake("db:create:all")
 
+    # Run generators
     generate 'simple_form:install --bootstrap'
 
     if yes? "Do you want to generate a root controller?"

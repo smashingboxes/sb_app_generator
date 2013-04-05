@@ -7,7 +7,7 @@
 ### First time deployment
 
 1) create deployer user
-ssh to server
+ssh root@your-server-ip
 adduser deployer --ingroup sudo
 
 2) Edit the config/deploy.rb with the correct settings
