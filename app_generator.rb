@@ -4,7 +4,7 @@ class AppBuilder < Rails::AppBuilder
   def initialize(generator)
     super(generator)
 
-    @master_url = "https://raw.github.com/smashingboxes/sb_app_generator/master"
+    @master_url = 'https://raw.github.com/smashingboxes/sb_app_generator/master'
   end
 
   def get_from_master_repo(file_path)
@@ -12,7 +12,7 @@ class AppBuilder < Rails::AppBuilder
   end
 
   def readme
-    get_from_master_repo "README.markdown"
+    get_from_master_repo 'README.markdown'
   end
 
   def test
@@ -32,77 +32,77 @@ class AppBuilder < Rails::AppBuilder
   end
 
   def gemfile
-    get_from_master_repo "Gemfile"
+    get_from_master_repo 'Gemfile'
   end  
 
   def gitignore
     git :init
-    get_from_master_repo ".gitignore"
+    get_from_master_repo '.gitignore'
   end
 
   def database_yml
-    get_from_master_repo "config/database.yml"
-    run "cp config/database.yml config/example_database.yml"
+    get_from_master_repo 'config/database.yml'
+    copy_file 'config/database.yml', 'config/example_database.yml'
   end
   
   def leftovers
-    server_ip = ask("What is the IP of your production server (leave empty if you don't know it yet)? ")
+    server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
     whoami = run('whoami', capture: true).strip
     db_username = ask("Database Username [#{whoami}]: ").underscore
     db_username = db_username.empty? ? whoami : db_username
-    db_password = ask("Database Password []: ").underscore
+    db_password = ask('Database Password []: ').underscore
 
-    get_from_master_repo "Procfile"
+    get_from_master_repo 'Procfile'
 
     # Strong parameters
-    get_from_master_repo "config/initializers/strong_parameters.rb"
-    gsub_file "config/application.rb", /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
+    get_from_master_repo 'config/initializers/strong_parameters.rb'
+    gsub_file 'config/application.rb', /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
 
     # Capistrano
-    empty_directory_with_gitkeep "config/recipes/templates"
-    get_from_master_repo "config/recipes/base.rb"
-    get_from_master_repo "config/recipes/check.rb"
-    get_from_master_repo "config/recipes/dragonfly.rb"
-    get_from_master_repo "config/recipes/elasticsearch.rb"
-    get_from_master_repo "config/recipes/foreman.rb"
-    get_from_master_repo "config/recipes/memcached.rb"
-    get_from_master_repo "config/recipes/nginx.rb"
-    get_from_master_repo "config/recipes/nodejs.rb"
-    get_from_master_repo "config/recipes/postgresql.rb"
-    get_from_master_repo "config/recipes/rbenv.rb"
-    get_from_master_repo "config/recipes/unicorn.rb"
-    get_from_master_repo "config/recipes/templates/maintenance.html.erb"
-    get_from_master_repo "config/recipes/templates/memcached.erb"
-    get_from_master_repo "config/recipes/templates/nginx_unicorn.erb"
-    get_from_master_repo "config/recipes/templates/postgresql.yml.erb"
-    get_from_master_repo "config/recipes/templates/unicorn.rb.erb"
-    get_from_master_repo "config/recipes/templates/unicorn_init.erb"
-    get_from_master_repo "config/deploy.rb"
+    empty_directory_with_gitkeep 'config/recipes/templates'
+    get_from_master_repo 'config/recipes/base.rb'
+    get_from_master_repo 'config/recipes/check.rb'
+    get_from_master_repo 'config/recipes/dragonfly.rb'
+    get_from_master_repo 'config/recipes/elasticsearch.rb'
+    get_from_master_repo 'config/recipes/foreman.rb'
+    get_from_master_repo 'config/recipes/memcached.rb'
+    get_from_master_repo 'config/recipes/nginx.rb'
+    get_from_master_repo 'config/recipes/nodejs.rb'
+    get_from_master_repo 'config/recipes/postgresql.rb'
+    get_from_master_repo 'config/recipes/rbenv.rb'
+    get_from_master_repo 'config/recipes/unicorn.rb'
+    get_from_master_repo 'config/recipes/templates/maintenance.html.erb'
+    get_from_master_repo 'config/recipes/templates/memcached.erb'
+    get_from_master_repo 'config/recipes/templates/nginx_unicorn.erb'
+    get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
+    get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
+    get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
+    get_from_master_repo 'config/deploy.rb'
 
-    gsub_file "config/deploy.rb", /\{\{app_name\}\}/, app_name if app_name.present?
-    gsub_file "config/deploy.rb", /\{\{server_ip\}\}/, server_ip if server_ip.present?
+    gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
+    gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
 
     bundle_command('install') #needs to be before generators and scaffolding
 
     # Create database
-    gsub_file "config/database.yml", /\{\{db_name\}\}/, app_name if app_name.present?
-    gsub_file "config/database.yml", /\{\{db_username\}\}/, db_username if db_username.present?
-    gsub_file "config/database.yml", /\{\{db_password\}\}/, "#{db_password}"
-    rake("db:create:all")
+    gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
+    gsub_file 'config/database.yml', /\{\{db_username\}\}/, db_username if db_username.present?
+    gsub_file 'config/database.yml', /\{\{db_password\}\}/, db_password
+    rake('db:create:all')
 
     # Run generators
     generate 'simple_form:install --bootstrap'
 
-    if yes? "Do you want to generate a root controller?"
-      name = ask("What should it be called?").underscore
+    if yes? 'Do you want to generate a root controller?'
+      name = ask('What should it be called?').underscore
       generate :controller, "#{name} index"
       route "root to: '#{name}\#index'"
-      remove_file "public/index.html"
+      remove_file 'public/index.html'
     end
 
-    git add: ".", commit: "-m 'initial commit'"
+    git add: '.', commit: "-m 'initial commit'"
 
-    puts ""
+    puts ''
     puts "You're welcome, from Michael and Leonel"
   end
 end

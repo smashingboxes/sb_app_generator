@@ -4,6 +4,8 @@
 ###Automatic (recommended)
 ```
 echo '-b https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
+
+rails new your_app_name
 ```
 
 ###Manual

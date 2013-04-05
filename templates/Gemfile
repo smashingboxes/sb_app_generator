@@ -10,39 +10,38 @@ def linux_only(require_as)
 end
 
 gem 'rails', '3.2.13'
-gem "strong_parameters"
-gem "foreman"
+gem 'strong_parameters'
+gem 'foreman'
 
 # Server
-gem "unicorn"
+gem 'unicorn'
 
 #Database
-gem "pg"
-# gem "activerecord-postgres-hstore"
+gem 'pg'
+# gem 'activerecord-postgres-hstore'
 
 # Templating
-gem "slim"
-gem "slim-rails", :group => :development
+gem 'slim'
+gem 'slim-rails', :group => :development
 
 # Form helpers
 gem 'simple_form'
 
-
 # Pagination
-gem "kaminari"
-gem "kaminari-bootstrap"
+gem 'kaminari'
+gem 'kaminari-bootstrap'
 
 # Date and time
-gem "chronic"
+gem 'chronic'
 
 # Settings (password)
-# gem "settingslogic"
+# gem 'settingslogic'
 
 # Queues
-# gem "queue_classic"
+# gem 'queue_classic'
 
 group :development do
-  gem "letter_opener"
+  gem 'letter_opener'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -57,34 +56,31 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
-  gem "modernizr"
+  gem 'modernizr'
 
   # Bootstrap CSS
   gem 'bootstrap-sass'
-  gem "font-awesome-sass-rails"
+  gem 'font-awesome-sass-rails'
 end
 
 gem 'jquery-rails'
 
-
 group :development, :test do
-  gem "minitest-rails"
-  gem "factory_girl_rails"
+  gem 'minitest-rails'
+  gem 'factory_girl_rails'
   gem 'rb-fsevent', require: darwin_only('rb-fsevent')
   gem 'growl',      require: darwin_only('growl')
   gem 'rb-inotify', require: linux_only('rb-inotify')
   gem 'turn'
   gem 'spinach-rails'
-  gem "guard-minitest"
-  gem "guard-spinach"
+  gem 'guard-minitest'
+  gem 'guard-spinach'
 end
 
 group :test do
-  gem "minitest-rails-capybara"
+  gem 'minitest-rails-capybara'
   gem 'database_cleaner'
-  gem "simplecov", require: false
+  gem 'simplecov', require: false
 end
 
 gem 'capistrano'
-
-
