@@ -84,15 +84,18 @@ class AppBuilder < Rails::AppBuilder
     gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
     gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
 
-    bundle_command('install') #needs to be before generators and scaffolding
+    # bundle (before database creation)
+    bundle_command('install') 
+    bundle_command('update')
 
     # Create database
     gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
     gsub_file 'config/database.yml', /\{\{db_username\}\}/, db_username if db_username.present?
     gsub_file 'config/database.yml', /\{\{db_password\}\}/, db_password
+    
     rake('db:create:all')
 
-    # Run generators
+    # Run generators (after database creation)
     generate 'simple_form:install --bootstrap'
 
     if yes? 'Do you want to generate a root controller?'
