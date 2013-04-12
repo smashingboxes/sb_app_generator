@@ -40,9 +40,10 @@ This will fetch the latest from github
 see `cap -T`
 
 Example:
+```
 cap unicorn:stop
 cap unicorn:start 
-
+```
 
 ### Troubleshoot
 
