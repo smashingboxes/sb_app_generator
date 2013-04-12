@@ -6,7 +6,7 @@
 
 ### First time deployment
 
-1) create deployer user
+1) create deployer user and generate a key
 ```
 ssh root@your-server-ip
 adduser deployer --ingroup sudo
@@ -15,10 +15,10 @@ ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 ```
 
-Then copy paste that file to:
-```
-https://github.com/smashingboxes/yourapp/settings/keys
-```
+2) Copy paste the content of that file (id_rsa.pub) and update your project settings on github:
+
+https://github.com/smashingboxes/your_app_name/settings/keys
+
 
 2) Edit the config/deploy.rb with the correct settings
 
