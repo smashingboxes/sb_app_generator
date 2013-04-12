@@ -17,3 +17,7 @@ rails new your_app_name -b https://raw.github.com/smashingboxes/sb_app_generator
 
 ### SSL error
 Make sure you have the latest ruby >= 1.9.3p362
+
+
+## Project Readme
+[Deploy instructions](https://github.com/smashingboxes/sb_app_generator/blob/master/templates/README.markdown)
