@@ -12,6 +12,7 @@ load "config/recipes/rbenv"
 # load "config/recipes/foreman"
 # load "config/recipes/elasticsearch"
 # load "config/recipes/dragonfly"
+# load "config/recipes/paperclip"
 # load "config/recipes/memcached"
 load "config/recipes/check"
 

@@ -65,6 +65,7 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo 'config/recipes/base.rb'
     get_from_master_repo 'config/recipes/check.rb'
     get_from_master_repo 'config/recipes/dragonfly.rb'
+    get_from_master_repo 'config/recipes/paperclip.rb'
     get_from_master_repo 'config/recipes/elasticsearch.rb'
     get_from_master_repo 'config/recipes/foreman.rb'
     get_from_master_repo 'config/recipes/memcached.rb'
