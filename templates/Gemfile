@@ -23,6 +23,7 @@ gem 'pg'
 # Templating
 gem 'slim'
 gem 'slim-rails', :group => :development
+#gem 'escape_utils' #faster rendering see https://github.com/blog/1475-escape-velocity
 
 # Form helpers
 gem 'simple_form'
