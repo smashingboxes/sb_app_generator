@@ -14,7 +14,8 @@ gem 'strong_parameters'
 gem 'foreman'
 
 # Server
-gem 'unicorn'
+gem 'unicorn', :group => :production
+gem 'thin', :group => :development
 
 #Database
 gem 'pg'
