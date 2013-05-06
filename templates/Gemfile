@@ -58,6 +58,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'modernizr'
+  gem 'turbo-sprockets-rails3'
 
   # Bootstrap CSS
   gem 'bootstrap-sass'
