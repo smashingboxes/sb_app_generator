@@ -3,6 +3,7 @@ SimpleCov.start 'rails'
 
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
+require 'rails/test_help'
 # Require support files
 Dir[File.expand_path('../support/*.rb', __FILE__)].each {|file| require file}
  
