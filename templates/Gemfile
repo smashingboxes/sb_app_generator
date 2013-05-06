@@ -14,7 +14,8 @@ gem 'strong_parameters'
 gem 'foreman'
 
 # Server
-gem 'unicorn'
+gem 'unicorn', :group => :production
+gem 'thin', :group => :development
 
 #Database
 gem 'pg'
@@ -46,7 +47,7 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'meta_request'
+  # gem 'meta_request'
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'rails-erd' #generates ERD model diagrams 

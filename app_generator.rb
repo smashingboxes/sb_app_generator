@@ -61,6 +61,7 @@ class AppBuilder < Rails::AppBuilder
     # Capistrano
 
     run "capify ."
+    remove_file 'config/deploy.rb'
     gsub_file 'Capfile', "# load 'deploy/assets'", "load 'deploy/assets'"
     empty_directory_with_gitkeep 'config/recipes/templates'
     get_from_master_repo 'config/recipes/base.rb'
