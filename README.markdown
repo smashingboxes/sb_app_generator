@@ -15,6 +15,7 @@ rails new your_app_name -b https://raw.github.com/smashingboxes/sb_app_generator
 
 ## Troubleshoot
 
+### Install Posrgres
 The generator only supports Postgres right now. Here is the [simplest way to install postgres](http://postgresapp.com/).
 
 ### SSL error
