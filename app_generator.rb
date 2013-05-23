@@ -62,6 +62,9 @@ class AppBuilder < Rails::AppBuilder
   end
   
   def leftovers
+    # bundle (before database creation)
+    bundle_command('update') # also does bundle install
+
     whoami = run('whoami', capture: true).strip
     server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
     db_username = ask("Database Username [#{whoami}]: ").underscore
@@ -97,9 +100,6 @@ class AppBuilder < Rails::AppBuilder
 
     gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
     gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
-
-    # bundle (before database creation)
-    bundle_command('update') # also does bundle install
 
     # Create database
     gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
