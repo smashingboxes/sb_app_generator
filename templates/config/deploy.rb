@@ -1,7 +1,8 @@
 # Capistrano Configuration
 # see commands available with cap -T
 
-require "bundler/capistrano"
+require 'bundler/capistrano'
+require 'capistrano/ext/multistage'
 
 load "config/recipes/base"
 load "config/recipes/nginx"
@@ -17,13 +18,23 @@ load "config/recipes/rbenv"
 # load "config/recipes/memcached"
 load "config/recipes/check"
 
-server "{{server_ip}}", :web, :app, :db, primary: true
+
+# Look in config/deploy/production.rb and config/deploy/staging.rb for server config
+# server "{{server_ip}}", :web, :app, :db, primary: true
 
 set :user, "deployer"
 set :application, "{{app_name}}"
+
+# cap production TASK
+# cap staging TASK
+# Don't name your stage "stage", as this is a reserved word
+set :stages, %w(production staging)
+set :default_stage, "staging"
+
 set :deploy_to, "/home/#{user}/www/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
+set :rails_env, 'production' #don't modify
 
 set :scm, "git"
 set :repository, "git@github.com:smashingboxes/{{app_name}}.git"

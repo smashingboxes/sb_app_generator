@@ -66,7 +66,7 @@ class AppBuilder < Rails::AppBuilder
     bundle_command('update') # also does bundle install
 
     whoami = run('whoami', capture: true).strip
-    server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
+    # server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
     db_username = ask("Database Username [#{whoami}]: ").underscore
     db_username = db_username.empty? ? whoami : db_username
     db_password = ask('Database Password []: ').underscore
@@ -99,7 +99,7 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
 
     gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
-    gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
+    # gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
 
     # Create database
     gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?

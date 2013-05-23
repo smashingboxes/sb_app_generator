@@ -1,0 +1,1 @@
+server "{{server_ip}}", :web, :app, :db, primary: true
