@@ -4,12 +4,11 @@ ruby '1.9.3'
 def darwin_only(require_as)
   RUBY_PLATFORM.include?('darwin') && require_as
 end
-
 def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem 'rails', '3.2.13'
+gem 'rails', '~> 3.2.13'
 gem 'strong_parameters'
 gem 'foreman'
 
@@ -30,14 +29,14 @@ gem 'slim-rails', :group => :development
 gem 'simple_form'
 
 # Pagination
-gem 'kaminari'
-gem 'kaminari-bootstrap'
+# gem 'kaminari'
+# gem 'kaminari-bootstrap'
 
 # Date and time
 gem 'chronic'
 
 # Settings (password)
-# gem 'settingslogic'
+gem 'settingslogic'
 
 # Queues
 # gem 'queue_classic'
@@ -47,7 +46,8 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'xray-rails'   # gem 'meta_request'
+  # gem 'xray-rails'   (might break js)
+  # gem 'meta_request' (might break file upload)
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'rails-erd' #generates ERD model diagrams 

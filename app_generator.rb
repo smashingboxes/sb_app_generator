@@ -10,6 +10,9 @@ class AppBuilder < Rails::AppBuilder
   def get_from_master_repo(file_path)
     get "#{@master_url}/templates/#{file_path}", file_path
   end
+  def get_from_file(file_path)
+    get "#{File.expand_path File.dirname(__FILE__)}/templates/#{file_path}", file_path
+  end
 
   def readme
     get_from_master_repo 'README.markdown'
@@ -37,12 +40,25 @@ class AppBuilder < Rails::AppBuilder
 
   def gitignore
     git :init
-    get_from_master_repo '.gitignore'
+    get "#{@master_url}/git/.gitignore", '.gitignore' #solves env.yml not being included
   end
 
   def database_yml
     get_from_master_repo 'config/database.yml'
     run 'cp config/database.yml config/example_database.yml'
+  end
+
+  def config
+    super
+    # Strong parameters
+    get_from_master_repo 'config/initializers/strong_parameters.rb'
+    gsub_file 'config/application.rb', /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
+    gsub_file 'config/application.rb', /\#\ config\.autoload_paths\ \+=\ \%W\(\#\{config\.root\}\/extras\)/, "config\.autoload_paths\ \+=\ \%W\(\#\{config\.root\}\/lib\)"
+
+    # settings
+    gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_token\ =\ )'.*'/, '\1Env.secret_token'
+    get_from_master_repo 'config/env.yml'
+    get_from_master_repo 'lib/env.rb'  
   end
   
   def leftovers
@@ -54,14 +70,10 @@ class AppBuilder < Rails::AppBuilder
 
     get_from_master_repo 'Procfile'
 
-    # Strong parameters
-    get_from_master_repo 'config/initializers/strong_parameters.rb'
-    gsub_file 'config/application.rb', /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
 
     # Capistrano
-
-    run "capify ."
-    remove_file 'config/deploy.rb'
+    get_from_master_repo 'config/deploy.rb'
+    capify!
     gsub_file 'Capfile', "# load 'deploy/assets'", "load 'deploy/assets'"
     empty_directory_with_gitkeep 'config/recipes/templates'
     get_from_master_repo 'config/recipes/base.rb'
@@ -82,14 +94,12 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
     get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
     get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
-    get_from_master_repo 'config/deploy.rb'
 
     gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
     gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
 
     # bundle (before database creation)
-    bundle_command('install') 
-    bundle_command('update')
+    bundle_command('update') # also does bundle install
 
     # Create database
     gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
