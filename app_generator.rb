@@ -118,7 +118,8 @@ class AppBuilder < Rails::AppBuilder
       remove_file 'public/index.html'
     end
 
-    git add: '.', commit: "-m 'initial commit'"
+    run "git add . > /dev/null"
+    run "git commit -m 'initial commit'  > /dev/null"
 
     run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!'"
     say "You're welcome, from Michael and Leonel"
