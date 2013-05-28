@@ -30,4 +30,4 @@ export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
 ```
 
 ## Project Readme
-[Deploy instructions](https://github.com/smashingboxes/sb_app_generator/blob/master/templates/README.markdown)
+[Deploy instructions](https://github.com/smashingboxes/sb_app_generator/blob/master/templates/README.md)
