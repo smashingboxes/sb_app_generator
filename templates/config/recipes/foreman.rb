@@ -1,24 +1,13 @@
-# rbenvsudo required this in the ./bashrc file
-# function rbenvsudo(){
-#   executable=$1
-#   shift 1
-#   sudo $(rbenv which $executable) $* 
-# }
 namespace :foreman do
   # Make sure that there is a Procfile.production in the root folder (and one for every environment)
   # Use foreman start in development with Procfile (no extension)
-
-
-  after "deploy:update", "foreman:export"    # Export foreman scripts
-  after "deploy:restart", "foreman:restart"   # Restart application scripts
-  after "deploy:stop", "foreman:stop"   # Restart application scripts
-  after "deploy:start", "foreman:start"
 
   # Foreman tasks
 
   desc 'Export the Procfile to Ubuntu upstart scripts'
   task :export, :roles => :queue do
-    run "cd #{release_path}; #{sudo} $(rbenv which foreman) export upstart /etc/init -f ./Procfile -a #{application} -u #{user} -l #{release_path}/log/foreman"
+    run "cd #{release_path}; #{sudo} env PATH=$PATH  bundle exec foreman export upstart /etc/init -f ./Procfile.#{rails_env} -a #{application} -u #{user} -l #{release_path}/log/foreman"
+    # https://github.com/sstephenson/rbenv/issues/127
   end
 
   desc "Start the application services"
@@ -36,7 +25,11 @@ namespace :foreman do
   task :restart, :roles => :queue do
     run "#{sudo} stop #{application}"
     run "#{sudo} start #{application}"
-    #run "sudo start #{application} || sudo restart #{application}"
+    #run "#{sudo} start #{application} || #{sudo} restart #{application}"
   end
 
+  after "deploy:update", "foreman:export"    # Export foreman scripts
+  after "deploy:restart", "foreman:restart"   # Restart application scripts
+  after "deploy:stop", "foreman:stop"   # Restart application scripts
+  after "deploy:start", "foreman:start"
 end
