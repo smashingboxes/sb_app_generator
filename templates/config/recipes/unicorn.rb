@@ -25,14 +25,8 @@ namespace :unicorn do
     after "deploy:#{command}", "unicorn:#{command}"
   end
 
-  before "unicorn:restart", "deploy:assets:precompile"
-  before "unicorn:start", "deploy:assets:precompile"
-  
-  # desc "Run bundle install"
-  # task :bundle_install, roles: :app do
-  #   run "cd #{current_path}; bundle install"
-  # end
-  # before "unicorn:restart", "unicorn:bundle_install"
+  # before "unicorn:restart", "deploy:assets:precompile"
+  # before "unicorn:start", "deploy:assets:precompile"
 end
 
 
