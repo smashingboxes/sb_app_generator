@@ -15,7 +15,8 @@ class AppBuilder < Rails::AppBuilder
   end
 
   def readme
-    get_from_master_repo 'README.markdown'
+    get_from_master_repo 'README.md'
+    gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
   end
 
   def test

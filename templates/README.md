@@ -1,4 +1,4 @@
-# Project Name
+# {{app_name}}
 
 ## Development Setup Instructions
 
@@ -17,7 +17,7 @@ cat ~/.ssh/id_rsa.pub
 
 2) Copy paste the content of that file (id_rsa.pub) and update your project settings on github:
 
-https://github.com/smashingboxes/your_app_name/settings/keys
+https://github.com/smashingboxes/{{app_name}}/settings/keys
 
 
 2) Edit the config/deploy.rb with the correct settings

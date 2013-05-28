@@ -5,6 +5,7 @@ require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
 
 load "config/recipes/base"
+load "config/recipes/shared"
 load "config/recipes/nginx"
 load "config/recipes/unicorn"
 load "config/recipes/postgresql"
@@ -16,7 +17,6 @@ load "config/recipes/rbenv"
 # load "config/recipes/dragonfly"
 # load "config/recipes/paperclip"
 # load "config/recipes/memcached"
-load "config/recipes/shared"
 load "config/recipes/check"
 
 
