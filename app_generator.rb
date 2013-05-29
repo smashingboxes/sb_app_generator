@@ -81,7 +81,7 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo 'config/deploy/production.rb'
     get_from_master_repo 'config/deploy/staging.rb'
     capify!
-    # gsub_file 'Capfile', "# load 'deploy/assets'", "load 'deploy/assets'"
+    gsub_file 'Capfile', "# load 'deploy/assets'", "load 'deploy/assets'"
     empty_directory_with_gitkeep 'config/recipes/templates'
     get_from_master_repo 'config/recipes/base.rb'
     get_from_master_repo 'config/recipes/check.rb'
