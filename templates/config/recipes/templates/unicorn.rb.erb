@@ -1,21 +1,42 @@
+# -*- encoding : utf-8 -*-
+worker_processes <%= unicorn_workers %>
 working_directory "<%= current_path %>"
 pid "<%= unicorn_pid %>"
 stderr_path "<%= unicorn_log %>"
 stdout_path "<%= unicorn_log %>"
 
-listen "/tmp/unicorn.<%= application %>.sock"
-worker_processes <%= unicorn_workers %>
-timeout 30
-
 preload_app true
 
+# Restart any workers that haven't responded in 30 seconds
+timeout 30
+
+listen "<%= unicorn_sock %>"
+
+before_exec do |server|
+  # reload Gemfile
+  ENV["BUNDLE_GEMFILE"] = "#{Rails.root}/Gemfile"
+end
+
 before_fork do |server, worker|
-  # Disconnect since the database connection will not carry over
+
+  # Clear DB Connections. See `after_fork`!
   if defined? ActiveRecord::Base
+    # ActiveRecord::Base.connection_handler.clear_all_connections!
     ActiveRecord::Base.connection.disconnect!
   end
 
-  # Quit the old unicorn process
+  ##
+  # When sent a USR2, Unicorn will suffix its pidfile with .oldbin and
+  # immediately start loading up a new version of itself (loaded with a new
+  # version of our app). When this new Unicorn is completely loaded
+  # it will begin spawning workers. The first worker spawned will check to
+  # see if an .oldbin pidfile exists. If so, this means we've just booted up
+  # a new Unicorn and need to tell the old one that it can now die. To do so
+  # we send it a QUIT.
+  #
+  # Using this method we get 0 downtime deploys.
+
+  # old_pid = '<%= unicorn_pid %>.oldbin'
   old_pid = "#{server.config[:pid]}.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
@@ -27,8 +48,9 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
-  # Start up the database connection again in the worker
   if defined?(ActiveRecord::Base)
+    # ActiveRecord::Base.connection_handler.verify_active_connections!
     ActiveRecord::Base.establish_connection
   end
 end
+
