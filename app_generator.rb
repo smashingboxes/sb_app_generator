@@ -115,8 +115,9 @@ class AppBuilder < Rails::AppBuilder
     # Run generators (after database creation)
     generate 'simple_form:install --bootstrap'
 
-    if yes? 'Do you want to generate a root controller?'
-      name = ask('What should it be called?').underscore
+    if yes? 'Do you want to generate a root controller? [n]'
+      name = ask('What should it be called? [main]').underscore
+      name = "main" if name.blank?
       generate :controller, "#{name} index"
       route "root to: '#{name}\#index'"
       remove_file 'public/index.html'
