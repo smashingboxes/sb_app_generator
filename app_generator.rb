@@ -95,6 +95,7 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo 'config/recipes/postgresql.rb'
     get_from_master_repo 'config/recipes/rbenv.rb'
     get_from_master_repo 'config/recipes/unicorn.rb'
+    get_from_master_repo 'config/recipes/shared.rb'
     get_from_master_repo 'config/recipes/templates/maintenance.html.erb'
     get_from_master_repo 'config/recipes/templates/memcached.erb'
     get_from_master_repo 'config/recipes/templates/nginx_unicorn.erb'
