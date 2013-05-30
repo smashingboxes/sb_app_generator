@@ -102,6 +102,7 @@ class AppBuilder < Rails::AppBuilder
     get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
     get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
     get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
+    get_from_master_repo 'config/recipes/templates/env_config.yml.erb'
 
     gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
     # gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
