@@ -25,8 +25,8 @@ namespace :unicorn do
     end
     # after "deploy:#{command}", "unicorn:#{command}"
   end
-  after "deploy:start", "unicorn:#start"
-  after "deploy:stop", "unicorn:#stop"
+  after "deploy:start", "unicorn:start"
+  after "deploy:stop", "unicorn:stop"
   after "deploy:restart", "unicorn:upgrade"
 
   desc "Force hard Unicorn restart"
