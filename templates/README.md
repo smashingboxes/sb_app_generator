@@ -1,8 +1,13 @@
 # {{app_name}}
+Todo... add some description of the app and the company
 
 ## Development Setup Instructions
+```ruby
+rails s
+```
 
 ## Server Setup Instructions
+Todo: add the staging and production ips...
 
 ### First time deployment
 
@@ -27,7 +32,12 @@ https://github.com/smashingboxes/{{app_name}}/settings/keys
 cap deploy:install
 cap deploy:setup
 cap deploy:cold
-cap deploy
+```
+
+4) To add oh-my-zsh:
+```
+ssh deployer@{{your_server_ip}}
+chsh -s /bin/zsh
 ```
 
 ### Update deployment

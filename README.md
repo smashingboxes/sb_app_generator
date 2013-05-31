@@ -1,4 +1,5 @@
 # Smashing Boxes App generator
+Makes building apps faster and more fun!
 
 ## Usage
 ###Automatic (recommended)

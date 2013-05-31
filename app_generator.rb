@@ -117,7 +117,7 @@ class AppBuilder < Rails::AppBuilder
     rake('db:create:all')
 
     # Run generators (after database creation)
-    generate 'simple_form:install --bootstrap'
+    # generate 'simple_form:install --bootstrap'
 
     # if yes? 'Do you want to generate a root controller? [n]'
     #   name = ask('What should it be called? [main]').underscore

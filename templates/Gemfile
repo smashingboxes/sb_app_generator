@@ -61,8 +61,10 @@ group :assets do
   gem 'modernizr'
   gem 'turbo-sprockets-rails3'
 
-  # Bootstrap CSS
-  gem 'bootstrap-sass'
+  # # Bootstrap CSS
+  # gem 'bootstrap-sass'
+  gem 'zurb-foundation'
+
   gem 'font-awesome-sass-rails'
 end
 

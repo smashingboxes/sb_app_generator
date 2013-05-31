@@ -20,8 +20,7 @@ load "config/recipes/rbenv"
 load "config/recipes/check"
 
 
-# Look in config/deploy/production.rb and config/deploy/staging.rb for server config
-# server "{{server_ip}}", :web, :app, :db, primary: true
+# Look in config/deploy/production.rb and config/deploy/staging.rb to set the server specific configs (IP address)
 
 set :user, "deployer"
 set :application, "{{app_name}}"

@@ -14,11 +14,13 @@ end
 namespace :deploy do
   desc "Install everything onto the server"
   task :install do
-    run "#{sudo} add-apt-repository -y ppa:keithw/mosh" #http://mosh.mit.edu/
+    # http://mosh.mit.edu/
+    # run "#{sudo} add-apt-repository -y ppa:keithw/mosh" 
+    # run "#{sudo} apt-get -y install mosh 
     run "#{sudo} apt-get -y update"
     run "#{sudo} apt-get -y install python-software-properties software-properties-common libxslt-dev libxml2-dev"
-    run "#{sudo} apt-get -y install mosh zsh" 
+    run "#{sudo} apt-get -y install zsh" 
     run "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh"
-    run "#{sudo} chsh -s `which zsh`" 
+    # run "#{sudo :as => user} chsh -s `which zsh`" 
   end
 end
