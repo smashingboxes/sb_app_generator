@@ -67,10 +67,12 @@ class AppBuilder < Rails::AppBuilder
     bundle_command('update') # also does bundle install
 
     whoami = run('whoami', capture: true).strip
+    db_username = whoami
+    db_password = ""
     # server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
-    db_username = ask("Database Username [#{whoami}]: ").underscore
-    db_username = db_username.empty? ? whoami : db_username
-    db_password = ask('Database Password []: ').underscore
+    # db_username = ask("Database Username [#{whoami}]: ").underscore
+    # db_password = ask('Database Password []: ').underscore
+    # db_username = db_username.empty? ? whoami : db_username
 
     get_from_master_repo 'Procfile'
 
@@ -117,13 +119,14 @@ class AppBuilder < Rails::AppBuilder
     # Run generators (after database creation)
     generate 'simple_form:install --bootstrap'
 
-    if yes? 'Do you want to generate a root controller? [n]'
-      name = ask('What should it be called? [main]').underscore
-      name = "main" if name.blank?
-      generate :controller, "#{name} index"
-      route "root to: '#{name}\#index'"
-      remove_file 'public/index.html'
-    end
+    # if yes? 'Do you want to generate a root controller? [n]'
+    #   name = ask('What should it be called? [main]').underscore
+    #   name = "main" if name.empty?
+    #   generate :controller, "#{name} index"
+    #   route "root to: '#{name}\#index'"
+    #   remove_file 'public/index.html'
+    # end
+    remove_file 'public/index.html'
 
     run "git add . > /dev/null"
     run "git commit -m 'initial commit'  > /dev/null"
