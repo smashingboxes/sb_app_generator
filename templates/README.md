@@ -61,5 +61,11 @@ cap unicorn:start
 Make sure the assets are precompiled
 ```
 cap deploy:assets:precompile
-cap unicorn:restart
+cap unicorn:stop unicorn:start
+```
+
+#### Man in the middle
+If you change the ip of a server but not its name you might get such warning. To get rid of it, use
+```
+ssh-keygen -R old_ip
 ```
