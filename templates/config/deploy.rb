@@ -41,6 +41,7 @@ set :repository, "git@github.com:smashingboxes/{{app_name}}.git"
 set :branch, "master"
 set :remote, 'origin'
 
+set :default_environment, {'PATH' => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"}
 set :maintenance_template_path, File.expand_path("../recipes/templates/maintenance.html.erb", __FILE__)
 
 default_run_options[:pty] = true

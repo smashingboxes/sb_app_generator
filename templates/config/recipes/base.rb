@@ -14,9 +14,6 @@ end
 namespace :deploy do
   desc "Install everything onto the server"
   task :install do
-    # http://mosh.mit.edu/
-    # run "#{sudo} add-apt-repository -y ppa:keithw/mosh" 
-    # run "#{sudo} apt-get -y install mosh 
     run "#{sudo} apt-get -y update"
     run "#{sudo} apt-get -y install python-software-properties software-properties-common libxslt-dev libxml2-dev vim"
     run "#{sudo} apt-get -y install zsh" 
