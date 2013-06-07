@@ -2,7 +2,12 @@
 Todo... add some description of the app and the company
 
 ## Development Setup Instructions
-```ruby
+```shell
+cp config/env_config_example.yml config/env_config.yml
+cp config/database_example.yml config/database.yml
+# edit your database.yml
+bundle install
+rake db:create db:migrate db:seed
 rails s
 ```
 
