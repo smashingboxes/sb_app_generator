@@ -20,6 +20,7 @@ Todo: add the staging and production ips...
 ```
 ssh root@your-server-ip
 adduser deployer --ingroup sudo
+cp /root/.ssh/authorized_keys /home/deployer/.ssh/
 su deployer
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
