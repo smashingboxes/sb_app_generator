@@ -4,17 +4,23 @@ Makes building apps faster and more fun!
 ## Usage
 ###Automatic (recommended)
 ```
-echo '-b https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
+echo '-m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
 
 rails new your_app_name
 ```
 
 ###Manual
 ```
-rails new your_app_name -b https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle
+rails new your_app_name -m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle
 ```
 
 ## Troubleshoot
+
+### Skip the automatic script
+in case of trouble
+```
+rails new your_app_name --no-rc
+```
 
 ### Install Posrgres
 The generator only supports Postgres right now. Here is the [simplest way to install postgres](http://postgresapp.com/).
