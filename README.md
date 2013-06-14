@@ -16,6 +16,13 @@ rails new your_app_name -m https://raw.github.com/smashingboxes/sb_app_generator
 
 ## Troubleshoot
 
+### Updating from rails3 to rails4
+change `-b` to `-m` in `~/.railsrc`
+If you wish to stay with rails3, use
+```
+rails new your_app_name -b https://github.com/smashingboxes/sb_app_generator/blob/rails3.2/app_generator.rb --skip-bundle
+```
+
 ### Skip the automatic script
 in case of trouble
 ```
