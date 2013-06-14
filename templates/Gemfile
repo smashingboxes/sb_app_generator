@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
+ruby '2.0.0'
 
 def darwin_only(require_as)
   RUBY_PLATFORM.include?('darwin') && require_as
@@ -8,8 +8,7 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem 'rails', '~> 3.2.13'
-gem 'strong_parameters'
+gem 'rails', '~> 4.0.0.rc2'
 gem 'foreman'
 
 # Server
@@ -30,7 +29,6 @@ gem 'simple_form'
 
 # Pagination
 # gem 'kaminari'
-# gem 'kaminari-bootstrap'
 
 # Date and time
 gem 'chronic'
@@ -57,9 +55,8 @@ end
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '>= 1.3.0'
   gem 'modernizr'
-  gem 'turbo-sprockets-rails3'
 
   # # Bootstrap CSS
   # gem 'bootstrap-sass'
