@@ -20,12 +20,12 @@ class AppBuilder < Rails::AppBuilder
   end
 
   def test
-    empty_directory_with_gitkeep 'test/factories'
-    empty_directory_with_gitkeep 'test/controllers'
-    empty_directory_with_gitkeep 'test/mailers'
-    empty_directory_with_gitkeep 'test/models'
-    empty_directory_with_gitkeep 'test/helpers'
-    empty_directory_with_gitkeep 'test/integration'
+    empty_directory_with_keep_file 'test/factories'
+    empty_directory_with_keep_file 'test/controllers'
+    empty_directory_with_keep_file 'test/mailers'
+    empty_directory_with_keep_file 'test/models'
+    empty_directory_with_keep_file 'test/helpers'
+    empty_directory_with_keep_file 'test/integration'
 
     empty_directory 'test/support'
     get_from_master_repo 'test/support/bootstrap_macros.rb'
@@ -52,9 +52,7 @@ class AppBuilder < Rails::AppBuilder
 
   def config
     super
-    # Strong parameters
-    get_from_master_repo 'config/initializers/strong_parameters.rb'
-    gsub_file 'config/application.rb', /(\s*config\.active_record\.whitelist_attributes\ =\ )true/, '\1false'
+    # add lib to the autoload path
     gsub_file 'config/application.rb', /\#\ config\.autoload_paths\ \+=\ \%W\(\#\{config\.root\}\/extras\)/, "config\.autoload_paths\ \+=\ \%W\(\#\{config\.root\}\/lib\)"
 
     # settings
@@ -81,12 +79,12 @@ class AppBuilder < Rails::AppBuilder
 
     # Capistrano
     get_from_master_repo 'config/deploy.rb'
-    empty_directory_with_gitkeep 'config/deploy'
+    empty_directory_with_keep_file 'config/deploy'
     get_from_master_repo 'config/deploy/production.rb'
     get_from_master_repo 'config/deploy/staging.rb'
     capify!
     gsub_file 'Capfile', "# load 'deploy/assets'", "load 'deploy/assets'"
-    empty_directory_with_gitkeep 'config/recipes/templates'
+    empty_directory_with_keep_file 'config/recipes/templates'
     get_from_master_repo 'config/recipes/base.rb'
     get_from_master_repo 'config/recipes/check.rb'
     get_from_master_repo 'config/recipes/dragonfly.rb'
