@@ -1,11 +1,26 @@
 # Smashing Boxes App generator
 Makes building apps faster and more fun!
 
+## Pre-Setup
+
 ## Usage
 ###Automatic (recommended)
+
 ```
 echo '-m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
+```
 
+Make sure you have `ruby 2.0` and `rails 4.0` installed
+
+```
+ruby -v
+rails -v
+gem install rails -v "~> 4.0.0.rc2"
+```
+
+then create your app
+
+```
 rails new your_app_name
 ```
 
