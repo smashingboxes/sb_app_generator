@@ -42,7 +42,7 @@ gsub_file 'config/application.rb', /\#\ config\.autoload_paths\ \+=\ \%W\(\#\{co
 gsub_file 'config/environments/production.rb', /\#\ config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\'/, "config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\'"
 
 # settings
-gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_token\ =\ )'.*'/, '\1Env.secret_token'
+gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
 get_from_master_repo 'config/env_config.yml'
 get_from_master_repo 'config/env_config_example.yml'
 get_from_master_repo 'lib/env.rb'  

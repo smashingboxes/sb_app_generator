@@ -57,18 +57,10 @@ see `cap -T`
 
 Example:
 ```
-cap unicorn:stop
-cap unicorn:start 
+cap unicorn:stop unicorn:start 
 ```
 
 ### Troubleshoot
-
-#### Assets precompilation error
-Make sure the assets are precompiled
-```
-cap deploy:assets:precompile
-cap unicorn:stop unicorn:start
-```
 
 #### Man in the middle
 If you change the ip of a server but not its name you might get such warning. To get rid of it, use
