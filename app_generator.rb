@@ -36,7 +36,7 @@ get_from_master_repo 'config/database_example.yml'
 run 'cp config/database.yml config/example_database.yml'
 
 # add lib to the autoload path
-gsub_file 'config/application.rb', /\#\ config\.autoload_paths\ \+=\ \%W\(\#\{config\.root\}\/extras\)/, "config\.autoload_paths\ \+=\ \%W\(\#\{config\.root\}\/lib\)"
+gsub_file 'config/application.rb', /(\n\s*end\nend)/, "\n  # Custom directories with classes and modules you want to be autoloadable.\n  config.autoload_paths += %W(#{config.root}/lib)\1"
 
 # modify production.rb
 gsub_file 'config/environments/production.rb', /\#\ config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\'/, "config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\'"
