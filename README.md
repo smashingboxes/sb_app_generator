@@ -1,25 +1,23 @@
 # Smashing Boxes App generator
 Makes building apps faster and more fun!
 
-## Pre-Setup
-
-## Usage
-###Automatic (recommended)
-
-```
-echo '-m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
-```
-
-Make sure you have `ruby 2.0` and `rails 4.0` installed
-
+## Prerequisites
+Make sure you have [Ruby 2.0](http://www.ruby-lang.org/en/) (We recommend you install ruby using [rbenv](https://github.com/sstephenson/rbenv) or [RVM](https://github.com/sstephenson/rbenv)) and [Rails 4.0](http://rubyonrails.org/) installed
 ```
 ruby -v
 rails -v
-gem install rails -v "~> 4.0.0.rc2"
+gem install rails
 ```
 
-then create your app
+### Postgres
+Check that you have postgres installed by running `brew info postgres`. You should see `/usr/local/Cellar/postgresql/X.X.X` in the first lines, if you see `Not installed`, install by running brew install postgres and following the instructions detailed in the caveats.
 
+## Usage
+###Automatic (recommended)
+```
+echo '-m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
+```
+---
 ```
 rails new your_app_name
 ```
@@ -30,32 +28,10 @@ rails new your_app_name -m https://raw.github.com/smashingboxes/sb_app_generator
 ```
 
 ## Troubleshoot
-
-### Updating from rails3 to rails4
-change `-b` to `-m` in `~/.railsrc`
-If you wish to stay with rails3, use
-```
-rails new your_app_name -b https://github.com/smashingboxes/sb_app_generator/blob/rails3.2/app_generator.rb --skip-bundle
-```
-
-### Skip the automatic script
-in case of trouble
+### Skip the template
+If you create a `~/.railsrc` file and wish to ignore it when creating a new app:
 ```
 rails new your_app_name --no-rc
-```
-
-### Install Posrgres
-The generator only supports Postgres right now. Here is the [simplest way to install postgres](http://postgresapp.com/).
-
-### SSL error
-Make sure you have the latest ruby >= 1.9.3p362
-
-#### curl-ca-bundle
-Installing `curl-ca-bundle` worked for some users.
-
-```
-brew install curl-ca-bundle
-export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
 ```
 
 ## Project Readme
