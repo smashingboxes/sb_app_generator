@@ -1,4 +1,4 @@
-set_default :ruby_version, "1.9.3-p429"
+set_default :ruby_version, "2.0.0-p247"
 # set_default :rbenv_bootstrap, "bootstrap-ubuntu-12-04" 
 
 namespace :rbenv do
@@ -15,9 +15,6 @@ BASHRC
     put bashrc, "/tmp/rbenvrc"
     run "cat /tmp/rbenvrc ~/.bashrc > ~/.bashrc.tmp"
     run "mv ~/.bashrc.tmp ~/.bashrc"
-    put bashrc, "/tmp/zshrc"
-    run "cat /tmp/zshrc ~/.zshrc > ~/.zshrc.tmp"
-    run "mv ~/.zshrc.tmp ~/.zshrc"
     run %q{export PATH="$HOME/.rbenv/bin:$PATH"}
     run %q{eval "$(rbenv init -)"}
     # run "rbenv #{rbenv_bootstrap}"
