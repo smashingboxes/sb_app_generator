@@ -1,1 +1,1 @@
-server "{{server_ip}}", :web, :app, :db, primary: true
+server "{{server_ip}}", :web, :app, :queue, :db, primary: true
