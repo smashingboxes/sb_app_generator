@@ -38,6 +38,7 @@ https://github.com/smashingboxes/{{app_name}}/settings/keys
 ```
 cap deploy:install
 cap deploy:setup
+# edit shared/config/env_config.yml on the server
 cap deploy:cold
 ```
 
