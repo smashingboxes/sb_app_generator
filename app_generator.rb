@@ -35,11 +35,13 @@ get_from_master_repo 'config/database.yml'
 get_from_master_repo 'config/database_example.yml'
 run 'cp config/database.yml config/example_database.yml'
 
-# add lib to the autoload path
+#modify application.rb
+gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, "\n\n    # Custom directories with classes and modules you want to be autoloadable.\n    config.autoload_paths += %W(\#\{config.root\}/lib)" + '\1'
 
 # modify production.rb
-gsub_file 'config/environments/production.rb', /\#\ config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\'/, "config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\'"
+gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\')/, '\1'
+gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
 
 # settings
 gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
