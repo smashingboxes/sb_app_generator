@@ -22,6 +22,7 @@ empty_directory 'test/support'
 get_from_master_repo 'test/support/bootstrap_macros.rb'
 get_from_master_repo 'test/test_helper.rb'
 get_from_master_repo 'Guardfile'
+get_from_master_repo 'config/initializers/generators.rb'
 
 # gemfile
 get_from_master_repo 'Gemfile'
