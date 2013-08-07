@@ -67,6 +67,7 @@ group :development do
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'rails-erd' #generates ERD model diagrams 
+  gem 'annotate'
 end
 
 group :development, :test do
@@ -75,7 +76,6 @@ group :development, :test do
   gem 'rb-fsevent', require: darwin_only('rb-fsevent')
   gem 'growl',      require: darwin_only('growl')
   gem 'rb-inotify', require: linux_only('rb-inotify')
-  gem 'turn'
   gem 'spinach-rails'
   gem 'guard-minitest'
   gem 'guard-spinach'
@@ -85,6 +85,9 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
   gem 'simplecov', require: false
+  gem 'turn', require: false
+  gem 'faker'
+  gem 'mocha'
 end
 
 group :doc do
