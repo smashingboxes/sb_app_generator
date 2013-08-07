@@ -1,7 +1,7 @@
-set(:postgresql_host) { 'localhost' }
-set(:postgresql_user) { user }
-set(:postgresql_password) { Capistrano::CLI.password_prompt 'PostgreSQL Password: ' }
-set(:postgresql_database) { "#{application}_#{rails_env}" }
+set_default(:postgresql_host) { 'localhost' }
+set_default(:postgresql_user) { user }
+set_default(:postgresql_password) { Capistrano::CLI.password_prompt 'PostgreSQL Password: ' }
+set_default(:postgresql_database) { "#{application}_#{rails_env}" }
 
 namespace :postgresql do
 
