@@ -42,11 +42,6 @@ cap deploy:setup
 cap deploy:cold
 ```
 
-4) To add oh-my-zsh:
-```
-ssh deployer@{{your_server_ip}}
-chsh -s /bin/zsh
-```
 
 ### Update deployment
 ```
