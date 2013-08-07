@@ -18,10 +18,15 @@ class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
 end
  
-class ActionDispatch::IntegrationTest
+class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
   include Rails.application.routes.url_helpers
-  include Capybara::RSpecMatchers
   include Capybara::DSL
   
   # include BoostrapMacros
 end
+
+# ActiveSupport::TestCase
+# ActionController::TestCase
+# ActionView::TestCase
+# ActionMailer::TestCase
+# ActionDispatch::TestCase 
