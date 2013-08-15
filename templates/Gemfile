@@ -73,12 +73,12 @@ end
 group :development, :test do
   gem 'minitest-rails'
   gem 'factory_girl_rails'
-  gem 'rb-fsevent', require: darwin_only('rb-fsevent')
-  gem 'growl',      require: darwin_only('growl')
-  gem 'rb-inotify', require: linux_only('rb-inotify')
-  gem 'spinach-rails'
+  gem 'rb-fsevent',               require: darwin_only('rb-fsevent')
+  gem 'terminal-notifier-guard',  require: darwin_only('terminal-notifier-guard')
+  gem 'rb-inotify',               require: linux_only('rb-inotify')
   gem 'guard-minitest'
-  gem 'guard-spinach'
+  # gem 'spinach-rails'
+  # gem 'guard-spinach'
 end
 
 group :test do
