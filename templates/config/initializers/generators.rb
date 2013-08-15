@@ -1,6 +1,6 @@
 Rails.application.config.generators do |g|
   # MiniTest
-  g.test_framework :mini_test, spec: true, fixture: false
+  g.test_framework :mini_test, fixture: false
 
   # Factory Girl
   g.fixture_replacement :factory_girl
