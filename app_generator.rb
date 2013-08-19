@@ -33,8 +33,7 @@ get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not bei
 
 # database_yml
 get_from_master_repo 'config/database.yml'
-get_from_master_repo 'config/database_example.yml'
-run 'cp config/database.yml config/example_database.yml'
+run 'cp config/database.yml config/database_example.yml'
 
 #modify application.rb
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
