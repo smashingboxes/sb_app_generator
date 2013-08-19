@@ -20,4 +20,14 @@ namespace :deploy do
     run "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh"
     # run "#{sudo :as => user} chsh -s `which zsh`" 
   end
+  
+  desc "reload the database with seed data"
+  task :seed do
+    run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
+  end
+  
+  desc "reload the database with seed data"
+  task :cardboard_seed do
+    run "cd #{current_path}; bundle exec rake cardboard:seed RAILS_ENV=#{rails_env}"
+  end
 end
