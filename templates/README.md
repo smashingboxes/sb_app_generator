@@ -64,3 +64,6 @@ If you change the ip of a server but not its name you might get such warning. To
 ```
 ssh-keygen -R old_ip
 ```
+
+#### Problem with rbenv
+Make sure you have your user using bash shell and that there is a home folder with a bashrc file. This is really only a problem if you created your deployer user manually (not using the above command)
