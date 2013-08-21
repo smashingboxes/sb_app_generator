@@ -12,7 +12,11 @@ def get_from_file(file_path)
     get "#{File.expand_path File.dirname(__FILE__)}/templates/#{file_path}", file_path
 end
 
+# Layout
+get_from_master_repo 'app/views/layouts/application.html.slim'
+
 # readme
+remove_file "README.rdoc"
 get_from_master_repo 'README.md'
 gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
 
