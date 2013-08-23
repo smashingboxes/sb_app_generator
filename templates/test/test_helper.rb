@@ -8,14 +8,16 @@ require 'factory_girl'
 require 'minitest/autorun'
 require 'minitest/rails'
 require 'minitest/rails/capybara'
+require "database_cleaner"
 
 # Support files
 Dir[File.expand_path('../support/*.rb', __FILE__)].each {|file| require file}
 # Database cleaner
 DatabaseCleaner.strategy = :transaction 
-# Coloring
+# Coloring 
 begin; require 'turn/autorun'; rescue LoadError; end
 
+####
 # All tests
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
@@ -28,10 +30,12 @@ class ActiveSupport::TestCase
   prepare
 end
  
+ ###
  # Integration Tests
 class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
   include Rails.application.routes.url_helpers
   include Capybara::DSL
+
   include Warden::Test::Helpers
   Warden.test_mode!
 
@@ -43,6 +47,7 @@ class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
   end
 end
 
+###
 # Controller Test
 class ActionController::TestCase < ActiveSupport::TestCase
   include Devise::TestHelpers
@@ -51,3 +56,4 @@ end
 # ActionView::TestCase
 # ActionMailer::TestCase
 # ActionDispatch::TestCase 
+

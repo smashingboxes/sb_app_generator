@@ -34,7 +34,6 @@ set :default_stage, "staging"
 set :deploy_to, "/home/#{user}/www/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
-set :rails_env, 'production' #don't modify
 
 set :scm, "git"
 set :repository, "git@github.com:smashingboxes/{{app_name}}.git"

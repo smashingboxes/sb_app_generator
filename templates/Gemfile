@@ -14,7 +14,7 @@ gem 'foreman'
 gem 'capistrano'
 
 # Server
-gem 'unicorn', group: :production
+gem 'unicorn' #staging and production
 gem 'thin', group: :development
 
 #Database
