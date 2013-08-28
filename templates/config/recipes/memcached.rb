@@ -20,5 +20,7 @@ namespace :memcached do
     task command, roles: :app do
       run "#{sudo} service memcached #{command}"
     end
+    after "deploy:#{command}", "memcached:#{command}"
   end
+  
 end
