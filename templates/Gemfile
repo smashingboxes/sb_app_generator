@@ -12,6 +12,7 @@ end
 gem 'rails', '~> 4.0.0'
 gem 'foreman'
 gem 'capistrano'
+gem 'dalli'
 
 # Server
 gem 'unicorn' #staging and production
