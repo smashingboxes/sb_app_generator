@@ -31,6 +31,9 @@ get_from_master_repo 'config/initializers/generators.rb'
 # gemfile
 get_from_master_repo 'Gemfile'
 
+# Gem initializers
+get_from_master_repo 'config/initializers/chronic.rb'
+
 # gitignore
 remove_file ".gitignore"
 get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not being included
