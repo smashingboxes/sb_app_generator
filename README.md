@@ -31,7 +31,7 @@ rails new your_app_name -m https://raw.github.com/smashingboxes/sb_app_generator
 ### OpenSSL Errors
 ```
 apply  https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb
-/Users/leonelgalan/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/net/http.rb:918:in `connect': SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (OpenSSL::SSL::SSLError)
+/Users/USER/.rbenv/versions/2.0.0-p247/lib/ruby/2.0.0/net/http.rb:918:in `connect': SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (OpenSSL::SSL::SSLError)
 ```
 
 - Make sure you are using RubyGems 2.0.3 or newer: `gem -v`
