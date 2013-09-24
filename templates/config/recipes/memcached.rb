@@ -2,13 +2,13 @@ set_default :memcached_memory_limit, 64
 
 namespace :memcached do
   desc "Install Memcached"
-  task :install, roles: :app do
+  task :install, roles: :memcache do
     run "#{sudo} apt-get -y install memcached"
   end
   after "deploy:install", "memcached:install"
 
   desc "Setup Memcached"
-  task :setup, roles: :app do
+  task :setup, roles: :memcache do
     template "memcached.erb", "/tmp/memcached.conf"
     run "#{sudo} mv /tmp/memcached.conf /etc/memcached.conf"
     restart
@@ -17,7 +17,7 @@ namespace :memcached do
 
   %w[start stop restart].each do |command|
     desc "#{command} Memcached"
-    task command, roles: :app do
+    task command, roles: :memcache do
       run "#{sudo} service memcached #{command}"
     end
     after "deploy:#{command}", "memcached:#{command}"
