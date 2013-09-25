@@ -2,6 +2,7 @@
 
 @master_url = 'https://raw.github.com/smashingboxes/sb_app_generator/master'
 
+whoami = run('whoami', capture: true).strip
 
 def get_from_master_repo(file_path)
     remove_file file_path
@@ -38,10 +39,6 @@ get_from_master_repo 'config/initializers/chronic.rb'
 remove_file ".gitignore"
 get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not being included
 
-# database_yml
-get_from_master_repo 'config/database.yml'
-run 'cp config/database.yml config/database_example.yml'
-
 #modify application.rb
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, "\n\n    # Custom directories with classes and modules you want to be autoloadable.\n    config.autoload_paths += %W(\#\{config.root\}/lib)" + '\1'
@@ -61,13 +58,6 @@ get_from_master_repo 'lib/env.rb'
 # bundle (before database creation)
 bundle_command('update') # also does bundle install
 
-whoami = run('whoami', capture: true).strip
-db_username = whoami
-db_password = ""
-# server_ip = ask "What is the IP of your production server (leave empty if you don't know it yet)? "
-# db_username = ask("Database Username [#{whoami}]: ").underscore
-# db_password = ask('Database Password []: ').underscore
-# db_username = db_username.empty? ? whoami : db_username
 get_from_master_repo 'Procfile'
 
 # Capistrano
@@ -98,11 +88,16 @@ get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
 get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
 get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
 get_from_master_repo 'config/recipes/templates/env_config.yml.erb'
-
 gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
-# gsub_file 'config/deploy.rb', /\{\{server_ip\}\}/, server_ip if server_ip.present?
 
 # Create database
+get_from_master_repo 'config/database.yml'
+run 'cp config/database.yml config/database_example.yml'
+# db_username = ask("Database Username [#{whoami}]: ").underscore
+# db_password = ask('Database Password []: ').underscore
+# db_username = db_username.empty? ? whoami : db_username
+db_username = whoami
+db_password = ""
 gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
 gsub_file 'config/database.yml', /\{\{db_username\}\}/, db_username if db_username.present?
 gsub_file 'config/database.yml', /\{\{db_password\}\}/, db_password
