@@ -1,5 +1,5 @@
 production:
-  secret_token: <%= Digest::SHA2.hexdigest([Time.now, rand].join) %>
+  secret_token: <%= SecureRandom.hex(64) %>
 
 staging: 
-  secret_token: <%= Digest::SHA2.hexdigest([Time.now, rand].join) %>
+  secret_token: <%= SecureRandom.hex(64) %>
