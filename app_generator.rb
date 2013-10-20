@@ -52,6 +52,11 @@ gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:
 gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
 run 'cp config/environments/production.rb config/environments/staging.rb'
 
+# modify assets
+run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
+get_from_master_repo 'app/assets/stylesheets/application.css.scss'
+get_from_master_repo 'app/assets/javascripts/application.js'
+
 # settings
 gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
 get_from_master_repo 'config/env_config.yml'
