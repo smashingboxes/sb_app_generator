@@ -11,7 +11,7 @@ end
 
 gem 'rails', '~> 4.0.0'
 gem 'foreman'
-gem 'capistrano'
+gem 'capistrano', '~> 2.15.5'
 gem 'dalli'
 
 # Server
@@ -28,7 +28,7 @@ gem 'slim-rails', group: :development
 #gem 'escape_utils' #faster rendering see https://github.com/blog/1475-escape-velocity
 
 # Form helpers
-gem 'simple_form', '~> 3.0.0.rc'
+gem 'simple_form', '~> 3.0.0'
 
 # Pagination
 # gem 'kaminari'

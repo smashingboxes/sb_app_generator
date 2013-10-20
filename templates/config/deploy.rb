@@ -47,6 +47,7 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
+after 'deploy', 'deploy:migrate'
 
 # hook to automatically push code before every deploy
 before 'deploy:update_code' do

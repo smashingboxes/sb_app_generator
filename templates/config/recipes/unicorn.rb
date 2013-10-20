@@ -36,3 +36,14 @@ namespace :unicorn do
   end
 
 end
+
+# if you get PG::Error: SSL SYSCALL error: EOF detected, uncomment the lines below
+# before_fork do |server, worker|
+#   defined?(ActiveRecord::Base) and
+#       ActiveRecord::Base.connection.disconnect!
+# end
+
+# after_fork do |server, worker|
+#   defined?(ActiveRecord::Base) and
+#       ActiveRecord::Base.establish_connection
+# end
