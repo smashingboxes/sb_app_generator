@@ -10,7 +10,7 @@ gem install rails
 ```
 
 ### Postgres
-Check that you have postgres installed by running `brew info postgres`. You should see `/usr/local/Cellar/postgresql/X.X.X` in the first lines, if you see `Not installed`, install by running brew install postgres and following the instructions detailed in the caveats.
+Check that you have postgres installed by running `brew info postgres`. You should see `/usr/local/Cellar/postgresql/X.X.X` in the first lines, if you see `Not installed`, install by running `brew install postgres` and following the instructions detailed in the caveats.
 
 ## Usage
 ###Automatic (recommended)
