@@ -33,7 +33,7 @@ get_from_master_repo 'config/initializers/generators.rb'
 get_from_master_repo 'Gemfile'
 
 # Gem initializers
-get_from_master_repo 'config/initializers/chronic.rb'
+get_from_master_repo 'config/initializers/time_formats.rb'
 
 # gitignore
 remove_file ".gitignore"
