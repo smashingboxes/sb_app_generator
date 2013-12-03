@@ -5,7 +5,7 @@ Rails.application.config.generators do |g|
   # Factory Girl
   g.fixture_replacement :factory_girl
 
-  # Mute Rails 
+  # Mute Rails
   ## stop Rails from generating empty asset files for every controller
   ## stop Rails from creating empty helper files
   g.helper false

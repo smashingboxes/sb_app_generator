@@ -58,7 +58,7 @@ get_from_master_repo 'app/assets/javascripts/application.js'
 gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
 get_from_master_repo 'config/env_config.yml'
 get_from_master_repo 'config/env_config_example.yml'
-get_from_master_repo 'lib/env.rb'  
+get_from_master_repo 'lib/env.rb'
 
 # bundle (before database creation)
 bundle_command('update') # also does bundle install
@@ -127,5 +127,3 @@ run "git commit -m 'initial commit'  > /dev/null"
 
 run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!'"
 say "You're welcome, from Michael and Leonel"
-
-

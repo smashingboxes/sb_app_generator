@@ -54,7 +54,7 @@ see `cap -T`
 
 Example:
 ```
-cap unicorn:stop unicorn:start 
+cap unicorn:stop unicorn:start
 ```
 
 ### Troubleshoot
