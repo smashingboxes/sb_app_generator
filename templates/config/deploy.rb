@@ -17,7 +17,7 @@ load "config/recipes/dragonfly"
 # load "config/recipes/elasticsearch"
 # load "config/recipes/paperclip"
 # load "config/recipes/redis"
-load "config/recipes/check"
+# load "config/recipes/check"
 
 
 # Look in config/deploy/production.rb and config/deploy/staging.rb to set the server specific configs (IP address)
