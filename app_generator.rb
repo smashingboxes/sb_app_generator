@@ -43,12 +43,11 @@ get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not bei
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
 
-  # Custom directories with classes and modules you want to be autoloadable.
-  # config.autoload_paths += %W(\#\{config.root\}/lib)
-
   # Email default url host 
   config.action_mailer.default_url_options = { :host => Env.host }
 //1
+
+require_relative '../lib/env.rb'
 EOS
 
 # modify production.rb
