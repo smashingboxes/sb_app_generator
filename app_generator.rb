@@ -44,6 +44,7 @@ gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ 
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, "\n\n    # Custom directories with classes and modules you want to be autoloadable.\n    config.autoload_paths += %W(\#\{config.root\}/lib)" + '\1'
 
 # modify production.rb
+gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/, '\1error'
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\')/, '\1'
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
 gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
