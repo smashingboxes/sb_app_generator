@@ -12,12 +12,12 @@ def remote_folder_exists?(full_path)
 end
 
 namespace :deploy do
-  desc "Install everything onto the server"
+  desc "Install everything onto the server" 
   task :install do
     run "#{sudo} apt-get -y update"
-    run "#{sudo} apt-get -y install python-software-properties software-properties-common libxslt-dev libxml2-dev vim"
-    run "#{sudo} apt-get -y install zsh" 
-    run "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh"
+    run "#{sudo} apt-get -y install python-software-properties software-properties-common libxslt-dev libxml2-dev vim sendmail"
+    # run "#{sudo} apt-get -y install zsh" 
+    # run "curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh"
     # run "#{sudo :as => user} chsh -s `which zsh`" 
   end
   

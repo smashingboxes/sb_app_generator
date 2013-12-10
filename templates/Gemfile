@@ -13,6 +13,7 @@ gem 'rails', '~> 4.0.2'
 gem 'foreman'
 gem 'capistrano', '~> 2.15.5'
 gem 'dalli'
+gem 'exception_notification'
 
 # Server
 gem 'unicorn' #staging and production

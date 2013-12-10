@@ -41,12 +41,33 @@ get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not bei
 
 #modify application.rb
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
-gsub_file 'config/application.rb', /(\n\s*end\nend)/, "\n\n    # Custom directories with classes and modules you want to be autoloadable.\n    config.autoload_paths += %W(\#\{config.root\}/lib)" + '\1'
+gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
+
+  # Custom directories with classes and modules you want to be autoloadable.
+  # config.autoload_paths += %W(\#\{config.root\}/lib)
+
+  # Email default url host 
+  config.action_mailer.default_url_options = { :host => Env.host }
+//1
+EOS
 
 # modify production.rb
 gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/, '\1error'
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\')/, '\1'
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
+gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
+  config.action_mailer.delivery_method = :sendmail #:smtp #emails will go to spam unless you change this
+  
+  #Automatic email on exception
+  config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    :email_prefix => "[Charge Ahead Staging Error] ",
+    :sender_address => %{"Error notifier" <from@email.com>},
+    :exception_recipients => %w{your_name@smashingboxes.com}
+  }
+//1
+EOS
+
 gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
 run 'cp config/environments/production.rb config/environments/staging.rb'
 

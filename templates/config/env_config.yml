@@ -2,6 +2,7 @@
 
 defaults: &defaults
   secret_token: <%= ('x' * 128) %>
+  host: localhost:3000
 
 development:
   <<: *defaults
