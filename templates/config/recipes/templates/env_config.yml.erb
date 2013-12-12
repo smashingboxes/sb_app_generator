@@ -1,5 +1,5 @@
 production:
-  secret_token: <%= SecureRandom.hex(64) %>
+  secret_token: <%= `rake secret` %>
 
-staging: 
-  secret_token: <%= SecureRandom.hex(64) %>
+staging:
+  secret_token: <%= `rake secret` %>
