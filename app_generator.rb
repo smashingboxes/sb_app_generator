@@ -40,14 +40,18 @@ remove_file ".gitignore"
 get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not being included
 
 #modify application.rb
+
+gsub_file 'config/application.rb', %r{(^\s*class Application < Rails::Application)}, <<-EOS
+\\1
+    require_relative '../lib/env.rb'
+EOS
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
 
-  # Email default url host 
-  config.action_mailer.default_url_options = { :host => Env.host }
-//1
+    # Email default url host
+    config.action_mailer.default_url_options = { :host => Env.host }
+\\1
 
-require_relative '../lib/env.rb'
 EOS
 
 # modify production.rb
@@ -55,7 +59,7 @@ gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
   config.action_mailer.delivery_method = :sendmail #:smtp #emails will go to spam unless you change this
-  
+
   #Automatic email on exception
   config.middleware.use ExceptionNotification::Rack,
   :email => {
@@ -63,7 +67,7 @@ gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
     :sender_address => %{"Error notifier" <from@email.com>},
     :exception_recipients => %w{your_name@smashingboxes.com}
   }
-//1
+\\1
 EOS
 
 gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
