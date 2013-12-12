@@ -22,7 +22,8 @@ ssh root@your-server-ip
 adduser deployer --ingroup sudo
 su deployer
 mkdir ~/.ssh/
-sudo cp /root/.ssh/authorized_keys /home/deployer/.ssh/
+sudo cp /root/.ssh/authorized_keys ~/.ssh/
+sudo chown deployer:sudo ~/.ssh/authorized_keys
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 ```
