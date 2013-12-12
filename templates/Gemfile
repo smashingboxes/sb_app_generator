@@ -54,8 +54,7 @@ gem 'jquery-rails'
 gem 'sass-rails','>= 4.0.1'
 gem 'coffee-rails','>= 4.0.1'
 gem 'uglifier', '>= 1.3.0'
-# Replace by gem 'foundation-rails', '~> 5.0.2' when http://rubygems.org/gems/foundation-rails is updated
-gem 'foundation-rails', github: 'zurb/foundation-rails', tag: 'v5.0.2.0'
+gem 'foundation-rails', '~> 5.0.2.0'
 # gem 'bootstrap-sass'
 # gem 'font-awesome-sass-rails', git: "https://github.com/littlebtc/font-awesome-sass-rails.git"
 
