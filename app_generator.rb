@@ -92,7 +92,7 @@ empty_directory_with_keep_file 'config/deploy'
 get_from_master_repo 'config/deploy/production.rb'
 get_from_master_repo 'config/deploy/staging.rb'
 capify!
-gsub_file 'Capfile', "# load 'deploy/assets'", "load 'deploy/assets'"
+gsub_file 'Capfile', %r{^\s*# load 'deploy/assets'}, "load 'deploy/assets'"
 empty_directory_with_keep_file 'config/recipes/templates'
 get_from_master_repo 'config/recipes/base.rb'
 get_from_master_repo 'config/recipes/check.rb'
