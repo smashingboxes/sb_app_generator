@@ -14,6 +14,7 @@ def get_from_file(file_path)
 end
 
 # Layout
+remove_file 'app/views/layouts/application.html.erb'
 get_from_master_repo 'app/views/layouts/application.html.slim'
 
 # readme
