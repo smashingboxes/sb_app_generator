@@ -27,7 +27,7 @@ namespace :unicorn do
   end
   after "deploy:start", "unicorn:start"
   after "deploy:stop", "unicorn:stop"
-  after "deploy:restart", "unicorn:upgrade"
+  after "deploy:restart", "unicorn:restart"
 
   desc "Force hard Unicorn restart"
   task :force_reboot, roles: :app do
