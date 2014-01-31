@@ -55,5 +55,3 @@ before 'deploy:update_code' do
   system "git push -u #{remote} #{branch}"
   abort unless $?.success?
 end
-
-  
