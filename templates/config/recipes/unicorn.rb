@@ -21,7 +21,7 @@ namespace :unicorn do
     desc "#{command} unicorn"
     task command, roles: :app do
       run "service unicorn_#{application} #{command}"
-      run "tail -n 20 #{unicorn_log}"
+      run "tail -n 40 #{unicorn_log}"
     end
     # after "deploy:#{command}", "unicorn:#{command}"
   end
