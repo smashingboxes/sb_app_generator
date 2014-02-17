@@ -26,8 +26,6 @@ sudo cp /root/.ssh/authorized_keys ~/.ssh/
 sudo chown deployer:sudo ~/.ssh/authorized_keys
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
-exit
-passwd -l deployer
 ```
 
 2) Copy paste the content of that file (id_rsa.pub) and update your project settings on github:
