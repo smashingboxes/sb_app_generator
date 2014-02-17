@@ -20,6 +20,8 @@ Todo: add the staging and production ips...
 ```
 ssh root@your-server-ip
 adduser deployer --ingroup sudo
+vi /etc/ssh/sshd_config
+# PasswordAuthentication no
 su deployer
 mkdir ~/.ssh/
 sudo cp /root/.ssh/authorized_keys ~/.ssh/
