@@ -6,8 +6,9 @@ set_default(:postgresql_database) { "#{application}_#{rails_env}" }
 namespace :postgresql do
   desc 'Install the latest stable release of PostgreSQL.'
   task :install, roles: :db, only: {primary: true} do
-    run "#{sudo} echo 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
-    run "#{sudo} wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -"
+    ubuntu_version = capture("lsb_release -cs").strip
+    run "#{sudo} sh -c 'echo \"deb http://apt.postgresql.org/pub/repos/apt/ #{ubuntu_version}-pgdg main\" > /etc/apt/sources.list.d/pgdg.list'"
+    run "#{sudo} sh -c 'wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -'"
     run "#{sudo} apt-get -y update"
     run "#{sudo} apt-get -y install postgresql-9.3 libpq-dev"
   end
