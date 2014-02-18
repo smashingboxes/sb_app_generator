@@ -25,16 +25,17 @@ namespace :postgresql do
 
   # Utilities
   def create_database(database, username)
-    sudo %{psql -c 'create database "#{database}" owner "#{username}"'}, as: 'postgres'
+    sudo %Q(psql -c 'create database "#{database}" owner "#{username}"'), as: 'postgres'
   rescue
-    logger.important 'PostreSQL database already exists'
+    logger.important "PostreSQL database already exists"
   end
 
   def create_user(username, password)
-    sudo %{psql -c 'create user "#{username}" with password "#{password}"'}, as: 'postgres'
+    sudo %Q(psql -c "create user \\"#{username}\\" with password '#{password}'"), as: 'postgres'
   rescue
-    logger.important 'PostreSQL user already exists'
+    logger.important "PostreSQL user already exists"
   end
+
 end
 
 after 'deploy:install', 'postgresql:install'
