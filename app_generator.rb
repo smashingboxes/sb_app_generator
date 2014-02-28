@@ -1,46 +1,42 @@
 # http://guides.rubyonrails.org/rails_application_templates.html
 
-@master_url = 'https://raw.github.com/smashingboxes/sb_app_generator/master'
+REMOTE_BASE_PATH = 'https://raw.github.com/smashingboxes/sb_app_generator/master'
+
+def download_file(file_path)
+  remove_file file_path
+  get "#{REMOTE_BASE_PATH}/templates/#{file_path}", file_path
+end
 
 whoami = run('whoami', capture: true).strip
 
-def get_from_master_repo(file_path)
-    remove_file file_path
-    get "#{@master_url}/templates/#{file_path}", file_path
-end
-def get_from_file(file_path)
-    remove_file file_path
-    get "#{File.expand_path File.dirname(__FILE__)}/templates/#{file_path}", file_path
-end
-
 # Layout
 remove_file 'app/views/layouts/application.html.erb'
-get_from_master_repo 'app/views/layouts/application.html.slim'
+download_file 'app/views/layouts/application.html.slim'
 
-# readme
-remove_file "README.rdoc"
-get_from_master_repo 'README.md'
+# Readme
+remove_file 'README.rdoc'
+download_file 'README.md'
 gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
 
-# test
+# Test
 empty_directory_with_keep_file 'test/factories'
 empty_directory 'test/support'
-get_from_master_repo 'test/support/bootstrap_macros.rb'
-get_from_master_repo 'test/test_helper.rb'
-get_from_master_repo 'Guardfile'
-get_from_master_repo 'config/initializers/generators.rb'
+download_file 'test/support/bootstrap_macros.rb'
+download_file 'test/test_helper.rb'
+download_file 'Guardfile'
+download_file 'config/initializers/generators.rb'
 
-# gemfile
-get_from_master_repo 'Gemfile'
+# Gemfile
+download_file 'Gemfile'
 
 # Gem initializers
-get_from_master_repo 'config/initializers/time_formats.rb'
+download_file 'config/initializers/time_formats.rb'
 
-# gitignore
-remove_file ".gitignore"
-get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not being included
+# .gitignore
+remove_file '.gitignore'
+get "#{REMOTE_BASE_PATH}/git/.gitignore", '.gitignore'
 
-#modify application.rb
+# Modify application.rb
 
 gsub_file 'config/application.rb', %r{(^\s*class Application < Rails::Application)}, <<-EOS
 \\1
@@ -58,7 +54,8 @@ EOS
 # modify production.rb
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\')/, '\1'
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
-gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
+environment nil, env: 'production' do
+  <<-EOS
 
   config.action_mailer.delivery_method = :sendmail #:smtp #emails will go to spam unless you change this
 
@@ -69,88 +66,73 @@ gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
     :sender_address => %{"Error notifier" <from@email.com>},
     :exception_recipients => %w{your_name@smashingboxes.com}
   }
-\\1
 EOS
+end
 
-gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
+environment 'config.action_mailer.delivery_method = :letter_opener', env: 'development'
 run 'cp config/environments/production.rb config/environments/staging.rb'
 gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/, '\1error'
 
-# modify assets
-run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
-get_from_master_repo 'app/assets/stylesheets/application.css.scss'
-get_from_master_repo 'app/assets/javascripts/application.js'
+# Modify assets
+run 'mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss'
+download_file 'app/assets/stylesheets/application.css.scss'
+download_file 'app/assets/javascripts/application.js'
 
-# settings
-gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
-get_from_master_repo 'config/env_config.yml'
-get_from_master_repo 'config/env_config_example.yml'
-get_from_master_repo 'lib/env.rb'
+# Settings
+gsub_file 'config/initializers/secret_token.rb', /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
+download_file 'config/env_config.yml'
+download_file 'config/env_config_example.yml'
+download_file 'lib/env.rb'
 
 # bundle (before database creation)
-bundle_command('update') # also does bundle install
+run_bundle
 
-get_from_master_repo 'Procfile'
+download_file 'Procfile'
 
 # Capistrano
-get_from_master_repo 'config/deploy.rb'
+download_file 'config/deploy.rb'
 empty_directory_with_keep_file 'config/deploy'
-get_from_master_repo 'config/deploy/production.rb'
-get_from_master_repo 'config/deploy/staging.rb'
-capify!
+download_file 'config/deploy/production.rb'
+download_file 'config/deploy/staging.rb'
+bundle_command 'exec capify . > /dev/null 2> /dev/null'
 gsub_file 'Capfile', %r{^\s*# load 'deploy/assets'}, "load 'deploy/assets'"
 empty_directory_with_keep_file 'config/recipes/templates'
-get_from_master_repo 'config/recipes/base.rb'
-get_from_master_repo 'config/recipes/check.rb'
-get_from_master_repo 'config/recipes/dragonfly.rb'
-get_from_master_repo 'config/recipes/paperclip.rb'
-get_from_master_repo 'config/recipes/elasticsearch.rb'
-get_from_master_repo 'config/recipes/foreman.rb'
-get_from_master_repo 'config/recipes/memcached.rb'
-get_from_master_repo 'config/recipes/nginx.rb'
-get_from_master_repo 'config/recipes/nodejs.rb'
-get_from_master_repo 'config/recipes/postgresql.rb'
-get_from_master_repo 'config/recipes/rbenv.rb'
-get_from_master_repo 'config/recipes/unicorn.rb'
-get_from_master_repo 'config/recipes/shared.rb'
-get_from_master_repo 'config/recipes/templates/maintenance.html.erb'
-get_from_master_repo 'config/recipes/templates/memcached.erb'
-get_from_master_repo 'config/recipes/templates/nginx_unicorn.erb'
-get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
-get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
-get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
-get_from_master_repo 'config/recipes/templates/env_config.yml.erb'
+download_file 'config/recipes/base.rb'
+download_file 'config/recipes/check.rb'
+download_file 'config/recipes/dragonfly.rb'
+download_file 'config/recipes/paperclip.rb'
+download_file 'config/recipes/elasticsearch.rb'
+download_file 'config/recipes/foreman.rb'
+download_file 'config/recipes/memcached.rb'
+download_file 'config/recipes/nginx.rb'
+download_file 'config/recipes/nodejs.rb'
+download_file 'config/recipes/postgresql.rb'
+download_file 'config/recipes/rbenv.rb'
+download_file 'config/recipes/unicorn.rb'
+download_file 'config/recipes/shared.rb'
+download_file 'config/recipes/templates/maintenance.html.erb'
+download_file 'config/recipes/templates/memcached.erb'
+download_file 'config/recipes/templates/nginx_unicorn.erb'
+download_file 'config/recipes/templates/postgresql.yml.erb'
+download_file 'config/recipes/templates/unicorn.rb.erb'
+download_file 'config/recipes/templates/unicorn_init.erb'
+download_file 'config/recipes/templates/env_config.yml.erb'
 gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
 
 # Create database
-get_from_master_repo 'config/database.yml'
+download_file 'config/database.yml'
 run 'cp config/database.yml config/database_example.yml'
-# db_username = ask("Database Username [#{whoami}]: ").underscore
-# db_password = ask('Database Password []: ').underscore
-# db_username = db_username.empty? ? whoami : db_username
+
 db_username = whoami
-db_password = ""
+db_password = ''
 gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
 gsub_file 'config/database.yml', /\{\{db_username\}\}/, db_username if db_username.present?
 gsub_file 'config/database.yml', /\{\{db_password\}\}/, db_password
 
-rake('db:create:all')
+rake 'db:create:all'
 
-# Run generators (after database creation)
-# generate 'simple_form:install --bootstrap'
-
-# if yes? 'Do you want to generate a root controller? [n]'
-#   name = ask('What should it be called? [main]').underscore
-#   name = "main" if name.empty?
-#   generate :controller, "#{name} index"
-#   route "root to: '#{name}\#index'"
-#   remove_file 'public/index.html'
-# end
 remove_file 'public/index.html'
 
-git :init
-run "git add . > /dev/null"
+run 'git init . > /dev/null'
+run 'git add . > /dev/null'
 run "git commit -m 'initial commit'  > /dev/null"
-
-run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!'"
-say "You're welcome, from Michael and Leonel"
