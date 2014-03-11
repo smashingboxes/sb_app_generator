@@ -6,11 +6,15 @@ set_default(:postgresql_database) { "#{application}_#{rails_env}" }
 namespace :postgresql do
   desc 'Install the latest stable release of PostgreSQL.'
   task :install, roles: :db, only: {primary: true} do
-    ubuntu_version = capture("lsb_release -cs").strip
-    run "#{sudo} sh -c 'echo \"deb http://apt.postgresql.org/pub/repos/apt/ #{ubuntu_version}-pgdg main\" > /etc/apt/sources.list.d/pgdg.list'"
-    run "#{sudo} sh -c 'wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -'"
+    if capture("lsb_release -ds").strip.split(" ").last == 'LTS' 
+      # only works for LTS releases
+      run "#{sudo} sh -c 'echo \"deb http://apt.postgresql.org/pub/repos/apt/ #{capture("lsb_release -cs").strip}-pgdg main\" > /etc/apt/sources.list.d/pgdg.list'"
+      run "#{sudo} sh -c 'wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -'"  
+    else
+      run "#{sudo} add-apt-repository -y ppa:pitti/postgresql"
+    end
     run "#{sudo} apt-get -y update"
-    run "#{sudo} apt-get -y install postgresql-9.3 libpq-dev"
+    run "#{sudo} apt-get -y install postgresql libpq-dev"
   end
 
   desc 'Create a database user for the application'
