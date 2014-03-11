@@ -60,13 +60,13 @@ gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 
-  config.action_mailer.delivery_method = :sendmail #:smtp #emails will go to spam unless you change this
+  config.action_mailer.delivery_method = :sendmail #:smtp #emails might go to spam if you don't change to smtp
 
   #Automatic email on exception
   config.middleware.use ExceptionNotification::Rack,
   :email => {
-    :email_prefix => "[Charge Ahead Staging Error] ",
-    :sender_address => %{"Error notifier" <from@email.com>},
+    :email_prefix => "[site_name Error] ",
+    :sender_address => %{"Error notifier" <noreply@smashingboxes.com>},
     :exception_recipients => %w{your_name@smashingboxes.com}
   }
 \\1
