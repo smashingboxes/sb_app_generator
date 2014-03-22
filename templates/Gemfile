@@ -25,14 +25,12 @@ gem 'pg'
 # Templating
 gem 'slim'
 gem 'slim-rails', group: :development
-#gem 'escape_utils' #faster rendering see https://github.com/blog/1475-escape-velocity
 
 # Form helpers
 gem 'simple_form', '~> 3.0.1'
 
 # Pagination
 # gem 'kaminari'
-# gem 'kaminari-bootstrap'
 
 # Date and time
 gem 'chronic'
@@ -47,6 +45,8 @@ gem 'settingslogic'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'jquery-rails'
+
+# Json
 # gem 'jbuilder', '~> 1.2'
 
 # CSS
@@ -54,20 +54,18 @@ gem 'sass-rails','>= 4.0.0'
 gem 'coffee-rails','>= 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'foundation-rails', '~> 5.0.3.1'
-# gem 'bootstrap-sass'
-# gem 'font-awesome-sass-rails', git: "https://github.com/littlebtc/font-awesome-sass-rails.git"
 
 group :development do
   gem 'letter_opener'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  # gem 'xray-rails'   (might break js)
-  # gem 'meta_request' (might break file upload)
   gem 'pry-rails'
   gem 'pry-debugger'
   gem 'rails-erd' #generates ERD model diagrams
   gem 'annotate'
+  # gem 'xray-rails'   (might break js)
+  # gem 'meta_request' (might break file upload)
 end
 
 group :development, :test do
@@ -90,7 +88,7 @@ group :test do
   gem 'mocha'
 end
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
+# group :doc do
+#   # bundle exec rake doc:rails generates the API under doc/api.
+#   gem 'sdoc', require: false
+# end
