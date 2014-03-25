@@ -1,5 +1,6 @@
 # Capistrano Configuration
 # see commands available with cap -T
+# Look in config/deploy/production.rb and config/deploy/staging.rb to set the server specific configs (IP address)
 
 require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
@@ -19,14 +20,9 @@ load "config/recipes/dragonfly"
 # load "config/recipes/redis"
 # load "config/recipes/check"
 
-
-# Look in config/deploy/production.rb and config/deploy/staging.rb to set the server specific configs (IP address)
-
 set :user, "deployer"
 set :application, "{{app_name}}"
 
-# cap production TASK
-# cap staging TASK
 # Don't name your stage "stage", as this is a reserved word
 set :stages, %w(production staging)
 set :default_stage, "staging"
@@ -46,8 +42,10 @@ set :maintenance_template_path, File.expand_path("../recipes/templates/maintenan
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
-after "deploy", "deploy:cleanup" # keep only the last 5 releases
+after 'deploy', 'deploy:cleanup' # keep only the last 5 releases
 after 'deploy', 'deploy:migrate'
+# after 'deploy', 'deploy:seed'
+# after 'deploy', 'deploy:cardboard_seed'
 
 # hook to automatically push code before every deploy
 before 'deploy:update_code' do
