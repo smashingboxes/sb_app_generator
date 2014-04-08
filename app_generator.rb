@@ -72,7 +72,17 @@ gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 \\1
 EOS
 
-gsub_file 'config/environments/development.rb', /(\n\s*end)/, "\n\n  config.action_mailer.delivery_method = :letter_opener\\1"
+gsub_file 'config/environments/development.rb', /(\n\s*end)/, <<-EOS
+
+  config.action_mailer.delivery_method = :letter_opener
+  
+  #Uncomment to use absolute paths for assets, added for using asset pipeline in email templates.
+  #Sets config.action_controller.asset_host and config.action_mailer.asset_host
+  #config.asset_host = 'http://localhost:3000'
+
+\\1
+EOS
+
 run 'cp config/environments/production.rb config/environments/staging.rb'
 gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/, '\1error'
 
