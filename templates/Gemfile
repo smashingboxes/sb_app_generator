@@ -8,6 +8,10 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
+group :production do
+  gem 'rack-cache', :require => 'rack/cache'
+end
+
 gem 'rails', '~> 4.0.2'
 gem 'foreman'
 gem 'capistrano', '~> 2.15.5'

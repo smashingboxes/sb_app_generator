@@ -58,6 +58,7 @@ EOS
 # modify production.rb
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\')/, '\1'
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
+gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.rack_cache\ \=\ true)/, '\1'
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 
   config.action_mailer.delivery_method = :sendmail #:smtp #emails might go to spam if you don't change to smtp
