@@ -8,7 +8,7 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-group :production do
+group :production, :staging do
   gem 'rack-cache', :require => 'rack/cache'
 end
 
