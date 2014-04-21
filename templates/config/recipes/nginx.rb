@@ -1,3 +1,5 @@
+set_default :use_ssl, false
+
 namespace :nginx do
   desc "Install latest stable release of nginx"
   task :install, roles: :web do
@@ -10,7 +12,12 @@ namespace :nginx do
   desc "Setup nginx configuration for this application"
   task :setup, roles: :web do
     template "nginx_unicorn.erb", "/tmp/nginx_conf"
-    run "#{sudo} mv /tmp/nginx_conf /etc/nginx/sites-enabled/#{application}"
+    if use_ssl
+      run "mkdir -p #{shared_path}/certs"
+      run "cd #{shared_path}/certs; #{sudo} openssl req -subj '/C=US' -new -nodes -keyout server.key -out server.csr"
+      run "cd #{shared_path}/certs; #{sudo} openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt"
+    end
+    run "#{sudo} mv -f /tmp/nginx_conf /etc/nginx/sites-enabled/#{application}"
     run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
     restart
   end
