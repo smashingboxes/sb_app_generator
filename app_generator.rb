@@ -98,6 +98,9 @@ get_from_master_repo 'config/env_config.yml'
 get_from_master_repo 'config/env_config_example.yml'
 get_from_master_repo 'lib/env.rb'
 
+# Locales
+get_from_master_repo 'config/locales/en.yml'
+
 # bundle (before database creation)
 bundle_command('update') # also does bundle install
 
