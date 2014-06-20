@@ -1,7 +1,6 @@
 # Note: this file needs to be manually created on the server
 
 defaults: &defaults
-  secret_token: <%= ('x' * 128) %>
   host: localhost:3000
 
 development:
