@@ -20,30 +20,21 @@ namespace :unicorn do
   %w[start stop restart upgrade].each do |command|
     desc "#{command} unicorn"
     task command, roles: :app do
+      # run "cat #{unicorn_log} >> #{unicorn_log}.all"
+      run "cat /dev/null > #{unicorn_log}"
       run "service unicorn_#{application} #{command}"
-      run "tail -n 40 #{unicorn_log}"
+      run "cat #{unicorn_log}"
     end
-    # after "deploy:#{command}", "unicorn:#{command}"
   end
   after "deploy:start", "unicorn:start"
   after "deploy:stop", "unicorn:stop"
-  after "deploy:restart", "unicorn:restart"
+  after "deploy:restart", "unicorn:upgrade"
 
   desc "Force hard Unicorn restart"
-  task :force_reboot, roles: :app do
+  task :force_restart, roles: :app do
+    run "cat /dev/null > #{unicorn_log}"
     run "service unicorn_#{application} stop"
     run "service unicorn_#{application} start"
+    run "cat #{unicorn_log}"
   end
-
 end
-
-# if you get PG::Error: SSL SYSCALL error: EOF detected, uncomment the lines below
-# before_fork do |server, worker|
-#   defined?(ActiveRecord::Base) and
-#       ActiveRecord::Base.connection.disconnect!
-# end
-
-# after_fork do |server, worker|
-#   defined?(ActiveRecord::Base) and
-#       ActiveRecord::Base.establish_connection
-# end
