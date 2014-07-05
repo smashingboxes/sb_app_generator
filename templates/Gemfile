@@ -56,8 +56,8 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'jquery-rails'
 
-# Json
-# gem 'jbuilder', '~> 1.2'
+# JSON
+# gem 'jbuilder'
 
 # CSS
 gem 'sass-rails','>= 4.0.0'
@@ -70,15 +70,16 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry-rails'
   gem 'pry-debugger'
   gem 'rails-erd' #generates ERD model diagrams
   gem 'annotate'
-  # gem 'xray-rails'   (might break js)
   # gem 'meta_request' (might break file upload)
+  # gem 'xray-rails'   (might break js)
 end
 
 group :development, :test do
+  gem 'pry-rails'
+  gem 'faker'
   gem 'minitest-rails'
   gem 'factory_girl_rails'
   gem 'rb-fsevent',               require: darwin_only('rb-fsevent')
@@ -90,6 +91,11 @@ group :development, :test do
 end
 
 group :test do
+  gem 'timecop'
+  gem 'capybara-screenshot'
+  gem 'capybara-webkit' #brew install qt
+  gem 'minitest-metadata', require: false
+  # gem "codeclimate-test-reporter", require: false
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
   gem 'simplecov', require: false
