@@ -110,7 +110,10 @@ get_from_master_repo 'config/deploy.rb'
 empty_directory_with_keep_file 'config/deploy'
 get_from_master_repo 'config/deploy/production.rb'
 get_from_master_repo 'config/deploy/staging.rb'
-capify!
+
+log :capify, ""
+in_root { run("bundle exec #{extify(:capify)} .", verbose: false) }
+
 gsub_file 'Capfile', %r{^\s*# load 'deploy/assets'}, "load 'deploy/assets'"
 empty_directory_with_keep_file 'config/recipes/templates'
 get_from_master_repo 'config/recipes/base.rb'
