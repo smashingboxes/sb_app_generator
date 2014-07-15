@@ -93,7 +93,6 @@ get_from_master_repo 'app/assets/stylesheets/application.css.scss'
 get_from_master_repo 'app/assets/javascripts/application.js'
 
 # settings
-gsub_file "config/initializers/secret_token.rb", /(.*\:\:Application\.config\.secret_key_base\ =\ )'.*'/, '\1Env.secret_token'
 get_from_master_repo 'config/env_config.yml'
 get_from_master_repo 'config/env_config_example.yml'
 get_from_master_repo 'lib/env.rb'
