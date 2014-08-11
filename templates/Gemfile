@@ -99,7 +99,7 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
   gem 'simplecov', require: false
-  gem 'turn', require: false
+  gem 'minitest-reporters', require: false
   gem 'mocha'
 end
 

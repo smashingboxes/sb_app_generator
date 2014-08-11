@@ -22,7 +22,8 @@ Dir[File.expand_path('../support/*.rb', __FILE__)].each {|file| require file}
 DatabaseCleaner.strategy = :transaction 
 
 # Coloring 
-begin; require 'turn/autorun'; rescue LoadError; end
+require "minitest/reporters"
+Minitest::Reporters.use!
 
 ####
 # All tests
