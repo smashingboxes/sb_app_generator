@@ -14,6 +14,13 @@ server {
 <% end %>
 
 server {
+  # redirect www to regular site
+  listen 80;
+  server_name www.smashingboxes.com;
+  return 301 $scheme://smashingboxes.com$request_uri;
+}
+
+server {
   <% if use_ssl %>
   listen 443 default ssl;
   ssl                  on;
@@ -32,14 +39,8 @@ server {
   # server_name example.com;
   root <%= current_path %>/public;
 
-  if (-f $document_root/system/maintenance.html) {
-    return 503;
-  }
-  error_page 503 @maintenance;
-  location @maintenance {
-    rewrite  ^(.*)$  /system/maintenance.html last;
-    break;
-  }
+  # remove tailing backslash for SEO
+  rewrite ^/(.*)/$ /$1 permanent;
 
   location ^~ /assets/ {
     gzip_static on;
