@@ -50,7 +50,7 @@ namespace :slack do
     set :this_commit, capture("cd #{current_path} && git rev-parse HEAD").strip!
     return if slack_token.nil?
     announced_deployer = fetch(:deployer)
-    github_diff = "[diff](https://github.com/smashingboxes/actual_id/compare/#{last_commit}...#{this_commit})"
+    github_diff = "https://github.com/smashingboxes/#{application}/compare/#{last_commit}...#{this_commit}"
     msg = "@channel #{announced_deployer} deployed #{slack_application} to #{rails_env}. #{(show_diff_in_slack)? github_diff : ''}"
     slack_connect(msg)
   end
