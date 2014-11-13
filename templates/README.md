@@ -3,7 +3,7 @@ Todo... add some description of the app and the company
 
 ## Development Setup Instructions
 ```shell
-cp config/env_config_example.yml config/env_config.yml
+cp config/env_config_example.yml config/secrets.yml
 cp config/database_example.yml config/database.yml
 # edit your database.yml
 bundle install
@@ -41,8 +41,7 @@ https://github.com/smashingboxes/{{app_name}}/settings/keys
 ```
 cap deploy:install
 cap deploy:setup
-# edit shared/config/env_config.yml on the server
-# ALSO add ENV["SECRET_KEY_BASE"]
+# edit shared/config/secrets.yml on the server
 cap deploy:cold
 ```
 

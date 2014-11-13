@@ -38,7 +38,7 @@ get_from_master_repo 'config/initializers/time_formats.rb'
 
 # gitignore
 remove_file ".gitignore"
-get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not being included
+get "#{@master_url}/git/.gitignore", '.gitignore' #solves secrets.yml not being included
 
 #modify application.rb
 
@@ -93,8 +93,8 @@ get_from_master_repo 'app/assets/stylesheets/application.css.scss'
 get_from_master_repo 'app/assets/javascripts/application.js'
 
 # settings
-get_from_master_repo 'config/env_config.yml'
-get_from_master_repo 'config/env_config_example.yml'
+get_from_master_repo 'config/secrets.yml'
+get_from_master_repo 'config/secrets_example.yml'
 get_from_master_repo 'lib/env.rb'
 
 # Locales
@@ -136,7 +136,7 @@ get_from_master_repo 'config/recipes/templates/nginx_unicorn.erb'
 get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
 get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
 get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
-get_from_master_repo 'config/recipes/templates/env_config.yml.erb'
+get_from_master_repo 'config/recipes/templates/secrets.yml.erb'
 gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
 
 # Create database
@@ -173,7 +173,15 @@ remove_file 'public/index.html'
 
 git :init
 run "git add . > /dev/null"
+run "git rm config/secrets.yml"
 run "git commit -m 'initial commit'  > /dev/null"
 
-run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!'"
-say "You're welcome, from Michael and Leonel"
+
+say "   _____                     _     _             ____                    
+  / ____|                   | |   (_)           |  _ \\                   
+ | (___  _ __ ___   __ _ ___| |__  _ _ __   __ _| |_) | _____  _____ ___ 
+  \\___ \\| '_ ` _ \\ / _` / __| '_ \\| | '_ \\ / _` |  _ < / _ \\ \\/ / _ \\ __|
+  ____) | | | | | | (_| \\__ \\ | | | | | | | (_| | |_) | (_) >  <  __\\__ \
+ |_____/|_| |_| |_|\\__,_|___/_| |_|_|_| |_|\\__, |____/ \\___/_/\\_\\___|___/
+                                            __/ |                        
+                                           |___/                         "
