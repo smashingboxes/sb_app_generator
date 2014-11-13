@@ -19,6 +19,7 @@ namespace :nginx do
     end
     run "#{sudo} mv -f /tmp/nginx_conf /etc/nginx/sites-enabled/#{application}"
     run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
+    run "#{sudo} mkdir -p /etc/nginx/cache/dragonfly"
     restart
   end
   after "deploy:setup", "nginx:setup"
@@ -31,5 +32,3 @@ namespace :nginx do
   end
 end
 
-# NOTE: I found it necessary to manually fix the init script as shown here
-# https://bugs.launchpad.net/nginx/+bug/1033856

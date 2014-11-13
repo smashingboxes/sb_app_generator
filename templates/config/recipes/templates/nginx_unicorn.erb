@@ -2,6 +2,8 @@ upstream unicorn {
   server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
 }
 
+proxy_cache_path /etc/nginx/cache/dragonfly levels=2:2 keys_zone=dragonfly:100m inactive=30d max_size=1g;
+
 <% if use_ssl %>
 server {
     listen       80;
@@ -41,6 +43,13 @@ server {
 
   # remove tailing backslash for SEO
   rewrite ^/(.*)/$ /$1 permanent;
+
+
+  location ^~ /media/ {
+    proxy_pass http://unicorn;
+    proxy_cache dragonfly;
+    proxy_cache_valid      200  30d;
+  }
 
   location ^~ /assets/ {
     gzip_static on;
