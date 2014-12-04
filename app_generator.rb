@@ -61,15 +61,24 @@ gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.rack_cache\ \=\ true)/, '\1'
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 
-  config.action_mailer.delivery_method = :sendmail #:smtp #emails might go to spam if you don't change to smtp
-
-  #Automatic email on exception
-  config.middleware.use ExceptionNotification::Rack,
-  :email => {
-    :email_prefix => "[site_name Error] ",
-    :sender_address => %{"Error notifier" <noreply@smashingboxes.com>},
-    :exception_recipients => %w{your_name@smashingboxes.com}
-  }
+  #   config.action_mailer.delivery_method = :smtp 
+  #   ActionMailer::Base.smtp_settings = {
+  #     :user_name => Env.smtp.user_name,
+  #     :password => Env.smtp.password,
+  #     :domain => Env.host,
+  #     :address => Env.smtp.address,
+  #     :port => 587,
+  #     :authentication => :plain,
+  #     :enable_starttls_auto => true
+  #   }
+  
+  #   # Automatic email on exception
+  #   config.middleware.use ExceptionNotification::Rack,
+  #   :email => {
+  #     :email_prefix => "[site_name Error] ",
+  #     :sender_address => %{"Error notifier" <noreply@smashingboxes.com>},
+  #     :exception_recipients => %w{your_name@smashingboxes.com}
+  #   }
 \\1
 EOS
 
