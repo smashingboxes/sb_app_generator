@@ -14,6 +14,7 @@ load "config/recipes/nodejs"
 load "config/recipes/rbenv"
 load "config/recipes/memcached"
 load "config/recipes/dragonfly"
+load "config/recipes/users"
 # load "config/recipes/foreman"
 # load "config/recipes/elasticsearch"
 # load "config/recipes/paperclip"
@@ -35,6 +36,7 @@ set :scm, "git"
 set :repository, "git@github.com:smashingboxes/{{app_name}}.git"
 set :branch, "master"
 set :remote, 'origin'
+# set :use_ssl, true # uncomment if you want to use https
 
 set :default_environment, {'PATH' => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"}
 set :maintenance_template_path, File.expand_path("../recipes/templates/maintenance.html.erb", __FILE__)

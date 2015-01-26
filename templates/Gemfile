@@ -8,9 +8,13 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem 'rails', '~> 4.0.2'
+group :production, :staging do
+  gem 'rack-cache', :require => 'rack/cache'
+end
+
+gem 'rails', '~> 4.0'
 gem 'foreman'
-gem 'capistrano', '~> 2.15.5'
+gem 'capistrano', '~> 2.15'
 gem 'dalli'
 gem 'exception_notification'
 
@@ -33,7 +37,7 @@ gem 'slim'
 gem 'slim-rails', group: :development
 
 # Form helpers
-gem 'simple_form', '~> 3.0.1'
+gem 'simple_form', '~> 3.0'
 
 # Pagination
 # gem 'kaminari'
@@ -52,8 +56,8 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'jquery-rails'
 
-# Json
-# gem 'jbuilder', '~> 1.2'
+# JSON
+# gem 'jbuilder'
 
 # CSS
 gem 'sass-rails','>= 4.0.0'
@@ -67,15 +71,17 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry-rails'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'rails-erd' #generates ERD model diagrams
   gem 'annotate'
-  # gem 'xray-rails'   (might break js)
   # gem 'meta_request' (might break file upload)
+  # gem 'xray-rails'   (might break js)
 end
 
 group :development, :test do
+  gem 'spring'
+  gem 'pry-rails'
+  gem 'faker'
   gem 'minitest-rails'
   gem 'factory_girl_rails'
   gem 'rb-fsevent',               require: darwin_only('rb-fsevent')
@@ -87,11 +93,15 @@ group :development, :test do
 end
 
 group :test do
+  # gem "codeclimate-test-reporter", require: false
+  # gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'capybara-screenshot'
+  gem 'capybara-webkit' #brew install qt
+  gem 'minitest-metadata', require: false
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
-  gem 'simplecov', require: false
-  gem 'turn', require: false
-  gem 'faker'
+  gem 'minitest-reporters', require: false
   gem 'mocha'
 end
 
