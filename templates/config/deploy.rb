@@ -33,7 +33,8 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :scm, "git"
-set :repository, "git@github.com:smashingboxes/{{app_name}}.git"
+set :github, "smashingboxes/{{app_name}}"
+set :repository, "git@github.com:#{github}.git"
 set :branch, "master"
 set :remote, 'origin'
 # set :use_ssl, true # uncomment if you want to use https
