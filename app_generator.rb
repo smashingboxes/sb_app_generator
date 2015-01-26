@@ -35,10 +35,14 @@ get_from_master_repo 'Gemfile'
 
 # Gem initializers
 get_from_master_repo 'config/initializers/time_formats.rb'
+get_from_master_repo 'config/initializers/rack-attack.rb'
 
 # gitignore
 remove_file ".gitignore"
-get "#{@master_url}/git/.gitignore", '.gitignore' #solves env_config.yml not being included
+get "#{@master_url}/git/.gitignore", '.gitignore' #solves secrets.yml not being included
+
+# Spring
+get_from_master_repo '.envrc'
 
 #modify application.rb
 
@@ -48,6 +52,9 @@ gsub_file 'config/application.rb', %r{(^\s*class Application < Rails::Applicatio
 EOS
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
+
+    # Rack attack gem
+    config.middleware.use Rack::Attack
 
     # Email default url host
     config.action_mailer.default_url_options = { :host => Env.host }
@@ -61,15 +68,24 @@ gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.rack_cache\ \=\ true)/, '\1'
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 
-  config.action_mailer.delivery_method = :sendmail #:smtp #emails might go to spam if you don't change to smtp
-
-  #Automatic email on exception
-  config.middleware.use ExceptionNotification::Rack,
-  :email => {
-    :email_prefix => "[site_name Error] ",
-    :sender_address => %{"Error notifier" <noreply@smashingboxes.com>},
-    :exception_recipients => %w{your_name@smashingboxes.com}
-  }
+  #   config.action_mailer.delivery_method = :smtp 
+  #   ActionMailer::Base.smtp_settings = {
+  #     :user_name => Env.smtp.user_name,
+  #     :password => Env.smtp.password,
+  #     :domain => Env.host,
+  #     :address => Env.smtp.address,
+  #     :port => 587,
+  #     :authentication => :plain,
+  #     :enable_starttls_auto => true
+  #   }
+  
+  #   # Automatic email on exception
+  #   config.middleware.use ExceptionNotification::Rack,
+  #   :email => {
+  #     :email_prefix => "[site_name Error] ",
+  #     :sender_address => %{"Error notifier" <noreply@smashingboxes.com>},
+  #     :exception_recipients => %w{your_name@smashingboxes.com}
+  #   }
 \\1
 EOS
 
@@ -93,8 +109,8 @@ get_from_master_repo 'app/assets/stylesheets/application.css.scss'
 get_from_master_repo 'app/assets/javascripts/application.js'
 
 # settings
-get_from_master_repo 'config/env_config.yml'
-get_from_master_repo 'config/env_config_example.yml'
+get_from_master_repo 'config/secrets.yml'
+get_from_master_repo 'config/secrets_example.yml'
 get_from_master_repo 'lib/env.rb'
 
 # Locales
@@ -130,13 +146,14 @@ get_from_master_repo 'config/recipes/rbenv.rb'
 get_from_master_repo 'config/recipes/unicorn.rb'
 get_from_master_repo 'config/recipes/shared.rb'
 get_from_master_repo 'config/recipes/slack.rb'
+get_from_master_repo 'config/recipes/users.rb'
 get_from_master_repo 'config/recipes/templates/maintenance.html.erb'
 get_from_master_repo 'config/recipes/templates/memcached.erb'
 get_from_master_repo 'config/recipes/templates/nginx_unicorn.erb'
 get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
 get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
 get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
-get_from_master_repo 'config/recipes/templates/env_config.yml.erb'
+get_from_master_repo 'config/recipes/templates/secrets.yml.erb'
 gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
 
 # Create database
@@ -173,7 +190,15 @@ remove_file 'public/index.html'
 
 git :init
 run "git add . > /dev/null"
+run "git rm config/secrets.yml"
 run "git commit -m 'initial commit'  > /dev/null"
 
-run "curl 'http://artii.herokuapp.com/make?text=Thanks%20#{whoami}!'"
-say "You're welcome, from Michael and Leonel"
+
+say "   _____                     _     _             ____                    
+  / ____|                   | |   (_)           |  _ \\                   
+ | (___  _ __ ___   __ _ ___| |__  _ _ __   __ _| |_) | _____  _____ ___ 
+  \\___ \\| '_ ` _ \\ / _` / __| '_ \\| | '_ \\ / _` |  _ < / _ \\ \\/ / _ \\ __|
+  ____) | | | | | | (_| \\__ \\ | | | | | | | (_| | |_) | (_) >  <  __\\__ \
+ |_____/|_| |_| |_|\\__,_|___/_| |_|_|_| |_|\\__, |____/ \\___/_/\\_\\___|___/
+                                            __/ |                        
+                                           |___/                         "

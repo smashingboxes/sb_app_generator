@@ -12,7 +12,7 @@ group :production, :staging do
   gem 'rack-cache', :require => 'rack/cache'
 end
 
-gem 'rails', '~> 4.0'
+gem 'rails', '~> 4.2'
 gem 'foreman'
 gem 'capistrano', '~> 2.15'
 gem 'dalli'
@@ -63,14 +63,18 @@ gem 'jquery-rails'
 gem 'sass-rails','>= 4.0.0'
 gem 'coffee-rails','>= 4.0.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'foundation-rails', '~> 5.0'
+gem 'foundation-rails', '~> 5.0.3.1'
+gem 'autoprefixer-rails'
+
+# Security
+gem 'rack-attack'
 
 group :development do
   gem 'letter_opener'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'rails-erd' #generates ERD model diagrams
   gem 'annotate'
   # gem 'meta_request' (might break file upload)
@@ -78,6 +82,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'spring'
   gem 'pry-rails'
   gem 'faker'
   gem 'minitest-rails'
@@ -95,10 +100,8 @@ group :test do
   gem 'capybara-screenshot'
   gem 'capybara-webkit' #brew install qt
   gem 'minitest-metadata', require: false
-  # gem "codeclimate-test-reporter", require: false
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
-  gem 'simplecov', require: false
   gem 'minitest-reporters', require: false
   gem 'mocha'
 end

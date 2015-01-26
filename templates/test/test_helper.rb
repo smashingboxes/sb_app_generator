@@ -1,8 +1,10 @@
 # require "codeclimate-test-reporter"
 # CodeClimate::TestReporter.start
+# gem "codeclimate-test-reporter", require: false
 
-require 'simplecov'
-SimpleCov.start 'rails'
+# require 'simplecov'
+# SimpleCov.start 'rails'
+# gem 'simplecov', require: false
 
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
