@@ -35,6 +35,7 @@ get_from_master_repo 'Gemfile'
 
 # Gem initializers
 get_from_master_repo 'config/initializers/time_formats.rb'
+get_from_master_repo 'config/initializers/rack-attack.rb'
 
 # gitignore
 remove_file ".gitignore"
@@ -51,6 +52,9 @@ gsub_file 'config/application.rb', %r{(^\s*class Application < Rails::Applicatio
 EOS
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
+
+    # Rack attack gem
+    config.middleware.use Rack::Attack
 
     # Email default url host
     config.action_mailer.default_url_options = { :host => Env.host }
