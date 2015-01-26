@@ -78,6 +78,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'spring'
   gem 'pry-rails'
   gem 'faker'
   gem 'minitest-rails'
@@ -91,14 +92,14 @@ group :development, :test do
 end
 
 group :test do
+  # gem "codeclimate-test-reporter", require: false
+  # gem 'simplecov', require: false
   gem 'timecop'
   gem 'capybara-screenshot'
   gem 'capybara-webkit' #brew install qt
   gem 'minitest-metadata', require: false
-  # gem "codeclimate-test-reporter", require: false
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
-  gem 'simplecov', require: false
   gem 'minitest-reporters', require: false
   gem 'mocha'
 end

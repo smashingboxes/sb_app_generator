@@ -40,6 +40,9 @@ get_from_master_repo 'config/initializers/time_formats.rb'
 remove_file ".gitignore"
 get "#{@master_url}/git/.gitignore", '.gitignore' #solves secrets.yml not being included
 
+# Spring
+get_from_master_repo '.envrc'
+
 #modify application.rb
 
 gsub_file 'config/application.rb', %r{(^\s*class Application < Rails::Application)}, <<-EOS
