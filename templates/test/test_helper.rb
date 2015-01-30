@@ -30,14 +30,19 @@ Minitest::Reporters.use!
 ####
 # All tests
 class ActiveSupport::TestCase
+  setup :global_setup
+  teardown :global_teardown
+  
   ActiveRecord::Migration.check_pending!
   include FactoryGirl::Syntax::Methods
 
-  def setup
+  protected
+  
+  def global_setup
     DatabaseCleaner.clean
     # Add code that needs to be executed before test suite start
   end
-  def teardown
+  def global_teardown
     DatabaseCleaner.clean
   end
 end
@@ -52,24 +57,18 @@ class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
 
   self.use_transactional_fixtures = false
 
-  def setup
+  def global_setup
+    super
     Warden.test_mode!
-    super
-  end
-
-  def teardown
-    Warden.test_reset!
-    super
-  end
-
-  before do
     DatabaseCleaner.clean_with :truncation
     if metadata[:js] == true
       Capybara.current_driver = :webkit
     end
   end
 
-  after do
+  def global_teardown
+    super
+    Warden.test_reset!
     Capybara.current_driver = Capybara.default_driver
   end
 end
