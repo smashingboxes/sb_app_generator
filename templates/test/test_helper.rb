@@ -36,14 +36,19 @@ class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
   include FactoryGirl::Syntax::Methods
 
-  protected
-  
-  def global_setup
+  def self.prepare
     DatabaseCleaner.clean
     # Add code that needs to be executed before test suite start
   end
+  prepare 
+  
+  protected
+  
+  def global_setup
+    # Add code that needs to be executed before each test
+  end
   def global_teardown
-    DatabaseCleaner.clean
+    # Add code that needs to be executed after each test
   end
 end
 
