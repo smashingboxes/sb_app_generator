@@ -1,12 +1,13 @@
 doctype html
-/[if IE 8]
-  html class="no-js lt-ie9" lang=I18n.locale
-/! [if gt IE 8]><!
-html class="no-js" lang=I18n.locale
-  /! <![endif]
+
+html lang=I18n.locale
 
   head
+    title = content_for?(:title) ? yield(:title) : "Default Title"
     == yield :seo
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
