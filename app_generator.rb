@@ -105,7 +105,6 @@ gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/
 
 # modify assets
 run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
-get_from_master_repo 'app/assets/stylesheets/application.css.scss'
 get_from_master_repo 'app/assets/javascripts/application.js'
 
 # settings
