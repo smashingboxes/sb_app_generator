@@ -174,6 +174,7 @@ route "get '/robots', to: 'application\#robots', format: 'txt'"
 remove_file 'public/robots.txt'
 empty_directory_with_keep_file 'app/views/application'
 get_from_master_repo 'app/views/application/robots.text.erb'
+get_from_master_repo 'config/sitemap.rb'
 
 # Run generators (after database creation)
 # generate 'simple_form:install --bootstrap'
