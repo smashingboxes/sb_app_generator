@@ -97,7 +97,7 @@ end
 group :test do
   gem 'timecop'
   gem 'capybara-screenshot'
-  gem 'capybara-webkit' #brew install qt
+  #gem 'capybara-webkit' #brew install qt
   gem 'minitest-metadata', require: false
   gem 'minitest-rails-capybara'
   gem 'database_cleaner'
