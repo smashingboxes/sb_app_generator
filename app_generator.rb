@@ -25,7 +25,6 @@ gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
 # test
 empty_directory_with_keep_file 'test/factories'
 empty_directory 'test/support'
-get_from_master_repo 'test/support/bootstrap_macros.rb'
 get_from_master_repo 'test/test_helper.rb'
 get_from_master_repo 'Guardfile'
 get_from_master_repo 'config/initializers/generators.rb'
@@ -39,7 +38,7 @@ get_from_master_repo 'config/initializers/rack-attack.rb'
 
 # gitignore
 remove_file ".gitignore"
-get "#{@master_url}/git/.gitignore", '.gitignore' #solves secrets.yml not being included
+get "#{@master_url}/git/.gitignore", '.gitignore' 
 
 # Spring
 get_from_master_repo '.envrc'
@@ -119,41 +118,6 @@ get_from_master_repo 'config/locales/en.yml'
 bundle_command('update') # also does bundle install
 
 get_from_master_repo 'Procfile'
-
-# Capistrano
-get_from_master_repo 'config/deploy.rb'
-empty_directory_with_keep_file 'config/deploy'
-get_from_master_repo 'config/deploy/production.rb'
-get_from_master_repo 'config/deploy/staging.rb'
-
-log :capify, ""
-in_root { run("bundle exec #{extify(:capify)} .", verbose: false) }
-
-gsub_file 'Capfile', %r{^\s*# load 'deploy/assets'}, "load 'deploy/assets'"
-empty_directory_with_keep_file 'config/recipes/templates'
-get_from_master_repo 'config/recipes/base.rb'
-get_from_master_repo 'config/recipes/check.rb'
-get_from_master_repo 'config/recipes/dragonfly.rb'
-get_from_master_repo 'config/recipes/paperclip.rb'
-get_from_master_repo 'config/recipes/elasticsearch.rb'
-get_from_master_repo 'config/recipes/foreman.rb'
-get_from_master_repo 'config/recipes/memcached.rb'
-get_from_master_repo 'config/recipes/nginx.rb'
-get_from_master_repo 'config/recipes/nodejs.rb'
-get_from_master_repo 'config/recipes/postgresql.rb'
-get_from_master_repo 'config/recipes/rbenv.rb'
-get_from_master_repo 'config/recipes/unicorn.rb'
-get_from_master_repo 'config/recipes/shared.rb'
-get_from_master_repo 'config/recipes/slack.rb'
-get_from_master_repo 'config/recipes/users.rb'
-get_from_master_repo 'config/recipes/templates/maintenance.html.erb'
-get_from_master_repo 'config/recipes/templates/memcached.erb'
-get_from_master_repo 'config/recipes/templates/nginx_unicorn.erb'
-get_from_master_repo 'config/recipes/templates/postgresql.yml.erb'
-get_from_master_repo 'config/recipes/templates/unicorn.rb.erb'
-get_from_master_repo 'config/recipes/templates/unicorn_init.erb'
-get_from_master_repo 'config/recipes/templates/secrets.yml.erb'
-gsub_file 'config/deploy.rb', /\{\{app_name\}\}/, app_name if app_name.present?
 
 # Create database
 get_from_master_repo 'config/database.yml'

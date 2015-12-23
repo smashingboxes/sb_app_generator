@@ -14,7 +14,6 @@ end
 
 gem 'rails', '~> 4.2'
 gem 'foreman'
-gem 'capistrano', '~> 2.15'
 gem 'dalli'
 gem 'exception_notification'
 
